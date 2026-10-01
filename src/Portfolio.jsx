@@ -3623,7 +3623,7 @@ export default function App() {
             <div className="case-nav">
               <SiteNav onLogoClick={goHome} onWorkClick={goToWorkArchive} onCta={scrollToContact} />
             </div>
-            <ProjectPage project={currentProject} onBack={goHome} onOpenProject={openProject} />
+            <ProjectPage project={currentProject} onBack={goToWorkArchive} onOpenProject={openProject} />
           </>
         )}
         <SiteFooter onPrivacyClick={goToPrivacy} />
