@@ -639,7 +639,6 @@ body{
   line-height: 1.2;
   vertical-align: top;
   overflow: hidden;
-  color: var(--k-300);
   transition: width 700ms cubic-bezier(0.76, 0, 0.24, 1);
 }
 .word-rotator__word {
@@ -691,14 +690,14 @@ body{
   font-weight: var(--fw-200);
   font-size: var(--fs-300);
   letter-spacing: -0.396px;
-  color: var(--k-300);
+  color: var(--k-500);
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 0.25em;
   transition: color 200ms ease, text-underline-offset 200ms ease;
 }
-.hero__cv-link:hover { color: var(--k-0); text-underline-offset: 0.35em; }
-.hero__cv-link:focus-visible { outline: 1px solid var(--k-300); outline-offset: 4px; }
+.hero__cv-link:hover { color: var(--k-300); text-underline-offset: 0.35em; }
+.hero__cv-link:focus-visible { outline: 1px solid var(--k-500); outline-offset: 4px; }
 
 .hero__closing {
   position: relative;
