@@ -767,8 +767,6 @@ body{
   .hero__closing-content { grid-column: 1 / -1; }
 }
 .hero__closing-headline { color: var(--k-500); }
-.hero__closing-eyebrow { color: var(--k-500); }
-.hero__closing-eyebrow--top { padding-bottom: var(--sp-400); }
 
 /* ------------------------------------------------------------------ */
 /*  Services — "What can I help you with?", Figma node 721:1990         */

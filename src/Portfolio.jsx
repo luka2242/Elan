@@ -2848,17 +2848,11 @@ function Home({ onOpenProject, onOpenWorkArchive, activeTags, setActiveTags, tog
             <div className="hero__closing-band hero__closing-band--outer" />
           </div>
           <div className="hero__closing-grid">
-            {/* Node 726:2233 — the headline plus its eyebrow line (803:2508),
-                sharing this one grid item/column so the eyebrow stays pinned
-                to the headline's own measure instead of the full grid width.
-                Both use CharFlipRevealText (the same scroll-scrubbed variant,
-                not the mount-triggered Auto one) so the eyebrow flips in
-                alongside the headline as this section scrolls into view,
-                rather than sitting there static. */}
+            {/* Node 726:2233 — the headline on its own (its eyebrow line,
+                803:2508, was removed at the client's request). Uses
+                CharFlipRevealText, the scroll-scrubbed variant, so it flips
+                in as this section scrolls into view. */}
             <div className="hero__closing-content">
-              <p className="eyebrow hero__closing-eyebrow hero__closing-eyebrow--top">
-                <CharFlipRevealText text="Strategy-led · Detail-focused" />
-              </p>
               <h2 className="section-headline hero__closing-headline">
                 <CharFlipRevealText
                   text="My approach is strategic, built around your company, its needs and values"
