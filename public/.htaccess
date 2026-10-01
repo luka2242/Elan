@@ -1,0 +1,19 @@
+# SPA fallback for Apache hosts — every request that isn't a real file or
+# directory (i.e. every client-side route like /work/<project-id>) gets
+# served index.html instead of 404ing, so React Router's own history-based
+# routing can take over from there.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+  RewriteRule ^index\.html$ - [L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /index.html [L]
+</IfModule>
+
+# Some older/shared Apache configs (common on cPanel-style hosts) don't have
+# a MIME type registered for .webp — every project image on this site is
+# one, so without this they can be served as the wrong content type.
+<IfModule mod_mime.c>
+  AddType image/webp .webp
+</IfModule>

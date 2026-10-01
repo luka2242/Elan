@@ -1,0 +1,2089 @@
+/* ------------------------------------------------------------------ */
+/*  Design tokens as real CSS custom properties — mirrors src/tokens.js  */
+/*  exactly (same source: get_variable_defs against the Figma file).     */
+/*  Breakpoints are Figma's real Home-page frame widths (0/480/768/      */
+/*  900/1440, per the "Collection 1" variables table), not Tailwind's     */
+/*  default scale. (The 900 tier was mistranscribed as 1100 for a long    */
+/*  time — confirmed 900 against the actual Figma variable mode table.)   */
+/*                                                                        */
+/*  Responsive tokens (spacing + type ramps) are redefined once here     */
+/*  per breakpoint — mirroring Figma's variable "modes" — instead of     */
+/*  every component repeating its own copy of the same numbers in its    */
+/*  own @media blocks. Components below just reference var(--token);     */
+/*  only genuinely structural breakpoint switches (flex-direction,       */
+/*  sticky on/off) still carry their own @media rule.                    */
+/* ------------------------------------------------------------------ */
+:root {
+  /* colors/neutrals */
+  --k-0: #ffffff;
+  --k-50: #fafafa;
+  --k-100: #f5f5f5;
+  --k-200: #e8e8e8;
+  --k-300: #d6d6d6;
+  --k-400: #a5a5a5;
+  --k-500: #757575;
+  --k-600: #575757;
+  --k-700: #444444;
+  --k-800: #2b2b2b;
+  --k-900: #1c1c1c;
+
+  /* colors/* accent tiers actually used */
+  --red-20: #ff9985;
+  --red-60: #e53917;
+  --red-80: #c13a1f;
+  --purple-20: #baadfb;
+  --purple-80: #5f47cc;
+  --yellow-20: #ffd978;
+  --yellow-80: #d99725;
+  --green-20: #62d989;
+  --green-80: #238c46;
+  --blue-20: #6dd3f2;
+  --blue-60: #1397bf; /* node 676:1763's "Why work with me" eyebrow */
+  --blue-80: #1183a6;
+
+  /* text/ff-primary, text/font-weight/* */
+  --font-primary: "Zalando Sans", sans-serif;
+  --fw-100: 200; /* ExtraLight */
+  --fw-200: 400; /* Regular */
+  --fw-300: 600; /* SemiBold */
+
+  /* text/font-sizes/* that don't vary by breakpoint */
+  --fs-200: 14px;
+  --fs-300: 18px;
+
+  /* layout/Spacing/sp-100/sp-200/sp-300 — constant, no breakpoint ramp */
+  --sp-100: 4px;
+  --sp-200: 8px;
+  --sp-300: 16px;
+
+  /* --- Responsive: mobile-tier values (mirrors tokens.js RESPONSIVE) --- */
+
+  /* layout/section-padding + layout/Spacing/sp-400/500/600/700 */
+  --section-padding: 20px;
+  --sp-400: 20px;
+  --sp-500: 32px;
+  --sp-600: 48px;
+  --sp-700: 64px;
+
+  /* text/font-sizes/fs-400/500/600/700/800/900 + their tracking, paired */
+  --fs-400-size: 20px;
+  --fs-400-tracking: -0.6px;
+  --fs-500-size: 24px;
+  --fs-500-tracking: -0.72px;
+  --fs-600-size: 32px;
+  --fs-600-tracking: -0.96px;
+  --fs-700-size: 36px;
+  --fs-700-tracking: -1.08px;
+  --fs-800-size: 40px;
+  --fs-800-tracking: -1.2px;
+  --fs-900-size: 48px;
+  --fs-900-tracking: -1.44px;
+
+  /* Hero label (Figma "Label" component, node 676:4762) */
+  --hero-label-size: 20px;
+  --hero-label-pad-x: 16px;
+  --hero-label-pad-y: 8px;
+  --hero-label-radius: 8px;
+
+  /* Semantic "section-headline" variable (Figma Collection 1) — not its own
+     literal size, but an ALIAS onto one of the fs-700/800/900 ramps above,
+     switching which one applies as width narrows: fs-700 at 900px+ (the
+     Laptop block below), fs-800 from 768-899px, fs-900 below 768px (its own
+     value continues to ramp with fs-900's own breakpoints below that, same
+     for fs-700 above 900). Base/mobile value here is fs-900's. */
+  --section-headline-size: var(--fs-600-size);
+  --section-headline-tracking: var(--fs-600-tracking);
+
+  --card-title-size: var(--fs-500-size);
+  --card-title-tracking: var(--fs-600-tracking);
+
+  /* Process section's text↔cards column gap (row-gap stays a flat 24px) */
+  --process-col-gap: 24px;
+
+  /* Button padding — shared by .btn-primary and .btn-secondary. */
+  --btn-padding-y: 8px;
+  --btn-padding-x: 12px;
+}
+
+/* Mobile Vertical (480px) — hero-label size, fs-800 and fs-900 all step
+   here even though nothing else does yet (fs-400/500/600/700 and the
+   spacing ramp all hold their mobile value through this tier too). */
+@media (min-width: 480px) {
+  :root {
+    --hero-label-size: 24px;
+
+    --fs-800-size: 44px;
+    --fs-800-tracking: -1.32px;
+    --fs-900-size: 54px;
+    --fs-900-tracking: -1.62px;
+
+    --card-title-size: var(--fs-500-size);
+    --card-title-tracking: var(--fs-500-tracking);
+  }
+}
+
+/* Tablet (768px) */
+@media (min-width: 768px) {
+  :root {
+    --section-padding: 24px;
+    --sp-400: 24px;
+    --sp-500: 40px;
+    --sp-600: 56px;
+    --sp-700: 72px;
+
+    --fs-400-size: 24px;
+    --fs-400-tracking: -0.72px;
+    --fs-500-size: 32px;
+    --fs-500-tracking: -0.96px;
+    --fs-600-size: 36px;
+    --fs-600-tracking: -1.08px;
+    --fs-700-size: 48px;
+    --fs-700-tracking: -1.44px;
+    --fs-800-size: 54px;
+    --fs-800-tracking: -1.62px;
+    --fs-900-size: 64px;
+    --fs-900-tracking: -1.92px;
+
+    --hero-label-size: 36px;
+    --hero-label-radius: 12px;
+
+    --process-col-gap: 56px;
+
+    --section-headline-size: var(--fs-700-size);
+    --section-headline-tracking: var(--fs-700-tracking);
+  }
+}
+
+/* Laptop (900px) — was mistranscribed as 1100px; Figma's own "Collection 1"
+   variable modes (confirmed against the section-headline variable's actual
+   mode table) switch here, at 900, not 1100. */
+@media (min-width: 900px) {
+  :root {
+    --sp-500: 48px;
+    --sp-600: 64px;
+    --sp-700: 88px;
+
+    --fs-600-size: 44px;
+    --fs-600-tracking: -1.32px;
+    --fs-700-size: 54px;
+    --fs-700-tracking: -1.62px;
+    --fs-800-size: 64px;
+    --fs-800-tracking: -1.92px;
+    --fs-900-size: 72px;
+    --fs-900-tracking: -2.16px;
+
+    --hero-label-size: 44px;
+    --hero-label-pad-x: 24px;
+    --hero-label-pad-y: 16px;
+    --hero-label-radius: 16px;
+
+    --process-col-gap: 88px;
+
+    --section-headline-size: var(--fs-600-size);
+    --section-headline-tracking: var(--fs-700-tracking);
+  }
+}
+
+/* Desktop (1440px) */
+@media (min-width: 1440px) {
+  :root {
+    --section-padding: 32px;
+    --sp-400: 32px;
+    --sp-500: 56px;
+    --sp-600: 80px;
+    --sp-700: 112px;
+
+    --fs-600-size: 48px;
+    --fs-600-tracking: -1.44px;
+    --fs-700-size: 64px;
+    --fs-700-tracking: -1.92px;
+    --fs-800-size: 72px;
+    --fs-800-tracking: -2.16px;
+    --fs-900-size: 96px;
+    --fs-900-tracking: -2.88px;
+
+    --hero-label-size: 64px;
+    --hero-label-pad-x: 32px;
+
+    --process-col-gap: 112px;
+  }
+}
+
+body{
+  background-color: var(--k-900);
+}
+
+/* Wraps the routed page content (Home, or SiteHeader+ProjectPage) +
+   SiteFooter — stacks them in one column with the standard section gap
+   between the last section and the footer, same as the gap between
+   sections within a page. */
+.page-shell {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Text primitives                                                    */
+/* ------------------------------------------------------------------ */
+
+.eyebrow {
+  font-family: var(--font-primary);
+  font-weight: 600;
+  font-size: var(--fs-200);
+  letter-spacing: -0.308px;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.section-headline {
+  font-family: var(--font-primary);
+  font-weight: var(--fw-200);
+  line-height: 1;
+  margin: 0;
+  font-size: var(--section-headline-size);
+  letter-spacing: var(--section-headline-tracking);
+  text-wrap: balance;
+}
+
+/* Word-by-word scroll reveal — see ScrollRevealText's comment in
+   Portfolio.jsx. .scroll-reveal is just an inline wrapper so it drops into
+   running text (e.g. inside .section-headline) without affecting layout;
+   each .scroll-reveal__word starts blurred/faded/offset and transitions to
+   sharp/opaque/in-place once the scroll listener flips .is-visible. */
+.scroll-reveal { display: inline; }
+.scroll-reveal__word {
+  display: inline-block;
+  opacity: 0;
+  filter: blur(10px);
+  transform: translateY(20px);
+  transition: opacity 0.35s linear, filter 0.35s linear, transform 0.35s linear;
+}
+.scroll-reveal__word.is-visible {
+  opacity: 1;
+  filter: blur(0);
+  transform: translateY(0);
+}
+
+/* CharFlipRevealText (Portfolio.jsx) — "effect 4" trial. perspective lives
+   on each word (not the whole line), matching the reference's own
+   per-word perspective — a shared line-level perspective would make
+   characters later in a long headline flip with an exaggerated, uneven
+   depth the further they sit from the perspective origin. opacity/
+   transform are written directly per frame from JS, not transitioned in
+   CSS — same reasoning as this file's other scroll-scrubbed effects
+   (Services/Process/hero-bands): a continuously-updating value fights a
+   CSS transition rather than easing through it. */
+.char-flip { display: inline; }
+.char-flip__word { display: inline-block; perspective: 800px; }
+.char-flip__char {
+  display: inline-block;
+  opacity: 0;
+  transform-origin: 0% 0%;
+  will-change: transform, opacity;
+}
+/* Accent words within a CharFlipRevealText line (see its accentWords prop)
+   — e.g. "strategic"/"needs"/"values" in the hero's closing statement —
+   same treatment/color as char-flip-auto__char--accent above. */
+.char-flip__char--accent {
+  color: var(--k-300);
+}
+
+/* CharFlipAutoChars (Portfolio.jsx) — same effect-4 shape as .char-flip
+   above, but CSS-transitioned once per character (staggered via
+   transitionDelay) instead of continuously scroll-scrubbed; used by
+   AutoCharFlipRevealText (hero) and ScrollCharFlipRevealText (process).
+   --char-flip-rotate/--char-flip-depth are set inline by those two
+   components off CHAR_FLIP_ROTATE_DEG/CHAR_FLIP_DEPTH_PX (Portfolio.jsx) —
+   the same two constants CharFlipRevealText's own per-frame transform
+   (the continuously scroll-scrubbed variant, .char-flip above) reads
+   directly, so both variants' starting pose stays in sync from one place
+   instead of two separate literals that could drift apart. */
+.char-flip-auto { display: inline; }
+.char-flip-auto__word { display: inline-block; perspective: 800px; }
+.char-flip-auto__char {
+  display: inline-block;
+  opacity: 0;
+  transform-origin: 0% 0%;
+  transform: rotateX(calc(-1 * var(--char-flip-rotate))) translateZ(calc(-1 * var(--char-flip-depth)));
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.char-flip-auto__char.is-visible {
+  opacity: 1;
+  transform: rotateX(0deg) translateZ(0px);
+}
+/* Accent words within an AutoCharFlipRevealText line (see its accentWords
+   prop) — e.g. "freelance"/"designer" in the hero's first line, "trust"/
+   "credibility" in its second — read at k-300 against the rest of the
+   line's default k-400. */
+.char-flip-auto__char--accent {
+  color: var(--k-300);
+}
+
+.card-title {
+  font-family: var(--font-primary);
+  font-weight: var(--fw-200);
+  line-height: 1;
+  margin: 0;
+  font-size: var(--card-title-size);
+  letter-spacing: var(--card-title-tracking);
+  text-wrap: balance;
+}
+
+.body-text {
+  font-family: var(--font-primary);
+  font-weight: var(--fw-100);
+  font-size: var(--fs-300);
+  margin: 0;
+}
+.body-text--justify { text-align: justify; }
+
+/* TabCard (Portfolio.jsx) — shared by Process (node 676:1513) and Services
+   (node 721:1990) cards: a filled color tab strip up top, a title + body
+   block below. Each section's own scroll animation still drives its own
+   *outer* box class (.process-card / .service-card) — only this inner
+   shape is shared. */
+.card-tab {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  font-family: var(--font-primary);
+  font-weight: var(--fw-300);
+  font-size: var(--fs-200);
+  /* Top/bottom are --sp-200/--sp-100 through mobile/tablet, both stepping
+     up (--sp-300/--sp-200) at the Laptop breakpoint (900px+) below. */
+  padding: var(--sp-200) var(--section-padding) var(--sp-100);
+  margin: 0;
+}
+@media (min-width: 900px) {
+  .card-tab { padding-top: var(--sp-300); padding-bottom: var(--sp-200); }
+}
+.card-tab p { margin: 0; }
+.card-tab--yellow { background: var(--yellow-20); color: var(--yellow-80); }
+.card-tab--green { background: var(--green-20); color: var(--green-80); }
+.card-tab--purple { background: var(--purple-20); color: var(--purple-80); }
+.card-tab--blue { background: var(--blue-20); color: var(--blue-80); }
+.card-tab--red { background: var(--red-20); color: var(--red-80); }
+.card-tab__body {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: var(--sp-500) var(--section-padding) var(--section-padding);
+}
+.card-tab__text { max-width: 540px; }
+
+/* Tone modifiers — the fixed set of text colors these sections actually
+   use (white on the dark hero/advantages bands; k-800 on the light process
+   band). Compose with a base class, e.g. class="eyebrow tone-light". */
+.tone-light { color: var(--k-300); }
+.tone-dark { color: var(--k-800); }
+.tone-muted { color: var(--k-500); }
+
+/* ------------------------------------------------------------------ */
+/*  Buttons                                                             */
+/* ------------------------------------------------------------------ */
+
+.btn-primary {
+  display: inline-block;
+  background: var(--k-0);
+  border: 1px solid var(--k-300);
+  color: var(--k-800);
+  border-radius: 4px;
+  padding: var(--btn-padding-y) var(--btn-padding-x);
+  font-family: var(--font-primary);
+  font-weight: var(--fw-200);
+  font-size: var(--fs-200);
+  letter-spacing: 0;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+  text-wrap: nowrap;
+}
+.btn-primary:hover { opacity: 0.8; }
+
+/* Same shape as .btn-primary, minus the fill — border-only so it reads as
+   the secondary action next to a filled .btn-primary in the same row. */
+.btn-secondary {
+  display: inline-block;
+  background: none;
+  border: 1px solid var(--k-300);
+  color: var(--k-800);
+  border-radius: 4px;
+  padding: var(--btn-padding-y) var(--btn-padding-x);
+  font-family: var(--font-primary);
+  font-weight: var(--fw-200);
+  font-size: var(--fs-200);
+  letter-spacing: 0;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+  text-wrap: nowrap;
+}
+.btn-secondary:hover { opacity: 0.8; }
+
+/* ------------------------------------------------------------------ */
+/*  Card glow (service cards) + hero glow — decorative SVG fills        */
+/* ------------------------------------------------------------------ */
+
+/* A plain blurred circle, not an exported asset — border-radius:50% + a big
+   CSS blur() stands in for Figma's pre-blurred ellipse fills, in the same
+   brand accent colors (--{color}-80). Centered on the card by default;
+   --glow-dx/--glow-dy are written directly onto the element every scroll
+   frame by Services' scroll listener (a ref, not React state — see its
+   comment in Portfolio.jsx), orbiting it around that center with a radius
+   large enough to sweep past the card's corners — genuinely traveling
+   around the card, not just wobbling near one spot. Each card's orbit
+   starts (phase, at GLOW_ORBIT in Portfolio.jsx) pointing toward a
+   different corner, which is as close as "stick to a corner" gets now that
+   the motion isn't pinned there. The transition doesn't chase the target —
+   updates already arrive every scroll frame — it just smooths over any gap
+   between frames (e.g. a fast fling) so the drift never reads as stepped. */
+/* A radial-gradient fill, not filter:blur() — a real blur this big forces
+   the browser to rasterize an enormous blurred bitmap on every move, which
+   is what was actually causing jank; a gradient with the same soft falloff
+   reads the same but is nearly free to paint and composite —
+   border-radius:50% is now redundant (the gradient's own circular shape
+   does the work) but harmless to leave.
+   top/left are written directly by Services' scroll listener in
+   Portfolio.jsx — GLOW_DRIFT's base top/left percent (matching what used to
+   be hardcoded per color below) combined via calc() with a continuous px
+   drift, so this animates real layout position rather than a compositor-only
+   transform. Deliberately no `transition`: that value already changes every
+   scroll frame, so a transition would just get interrupted and re-targeted
+   before it ever finishes — exactly what caused the jank/freezing earlier.
+   Direct, untransitioned updates at scroll-frame frequency already read as
+   smooth motion. */
+/* top/left are back to being static (set per color below) rather than
+   written every frame — writing them from JS was the other half of the
+   forced-reflow problem (see the margin-top comment above): a layout
+   property write one frame, followed by a getBoundingClientRect() read the
+   next, forces the browser to resolve the whole page's layout before it can
+   answer. --glow-dx/--glow-dy (in transform, a compositor-only property)
+   carry the drift now instead — see Services' scroll listener in
+   Portfolio.jsx. */
+.card-glow {
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  opacity: .5;
+  transform: translate(var(--glow-dx, 0px), var(--glow-dy, 0px));
+  background: radial-gradient(circle, var(--k-700) 0%, var(--k-800) 20%, transparent 55%)
+}
+.card-glow--blue { top: -50%; left: -100%;}
+.card-glow--green { top: -80%; left: 25%; }
+.card-glow--red { top: 20%; left: 40%; }
+
+/* ------------------------------------------------------------------ */
+/*  Hero — Figma node 675:980                                           */
+/* ------------------------------------------------------------------ */
+
+.hero {
+  position: relative;
+  isolation: isolate;
+  background-color: var(--k-900);
+  /* Scoped here, not on html/body/root — .hero has no position:sticky
+     descendants (those are all in the separate Process section), so
+     clipping its own bleed (e.g. the glow's negative inset) can't trigger
+     the sticky-breaking issue found in the Process section. */
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: calc(2 * var(--sp-700));
+  align-items: center;
+}
+
+.hero__content {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100dvh;
+  padding: var(--section-padding);
+  /* width, not just max-width: .hero is a column flex with
+     align-items:center, so without an explicit width this shrinks to fit
+     its content instead of filling the section. The headline lines only
+     mount once heroReady flips true (see Home's <h1>/<p>, gated on
+     heroReady) — while loading, they're empty and contribute no width, so
+     this box (and .site-nav inside it, which is width:100% of it) sizes
+     to whatever's left, i.e. just the nav — then jumps to its real width
+     the instant the headline text mounts. width:100% here makes it always
+     full width regardless of what its children currently render. */
+  width: 100%;
+  max-width: 1440px;
+}
+
+.site-nav {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: var(--sp-300);
+  border-bottom: 1px solid var(--k-700);
+}
+.site-nav__logo-btn {
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;}
+/* ElanLogoMark sets its own width/height as SVG attributes (height={36} in
+   SiteNav) — plain CSS still overrides those (presentation attributes lose
+   to any author rule), so this doesn't need a JS-side breakpoint check.
+   width:auto keeps the mark's own aspect ratio at the new height. */
+@media (max-width: 480px) {
+  .site-nav__logo-btn svg { height: 28px; width: auto; }
+}
+.site-nav__links { display: flex; align-items: center; gap: 32px; }
+.site-nav__link {
+  font-family: var(--font-primary);
+  font-weight: var(--fw-200);
+  font-size: var(--fs-200);
+  letter-spacing: 0;
+  color: var(--k-300);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: opacity 0.15s ease;
+}
+.site-nav__link:hover { opacity: 0.8; }
+
+/* Node 718:1863 — two independent headline lines in a 12-col grid (each
+   spans columns 1/10), not one headline block, so they lay out and
+   stagger-reveal as their own elements. margin-top here isn't a Figma
+   variable (it's literal in the source file), so it stays a plain number
+   rather than a token — was previously on .hero__row (now removed along
+   with .hero__copy/.hero__subhead/.hero__cta/.hero__labels, since the hero
+   shows only the headline now). Row gap uses --sp-600, which happens to
+   match Figma's literal 80px gap at the desktop tier exactly. */
+.hero__headline-grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  row-gap: var(--sp-400);
+  width: 100%;
+  margin-top: 40px;
+}
+@media (min-width: 900px) {
+  .hero__headline-grid { margin-top: 96px; }
+}
+
+.hero__headline-row {
+  grid-column: 1 / span 8;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+/* Below 480px (the Mobile tier, before Mobile Vertical's own breakpoint
+   kicks in) both this and .hero__closing-headline give up their partial
+   span and run the full width of their grid instead. */
+@media (max-width: 900px) {
+  .hero__headline-row { grid-column: 1 / span 10; }
+}
+
+@media (max-width: 479px) {
+  .hero__headline-row { grid-column: 1 / -1; }
+}
+
+.hero__headline {
+  font-family: var(--font-primary);
+  font-weight: var(--fw-200);
+  line-height: 1.03;
+  color: var(--k-500);
+  margin: 0;
+  width: 100%;
+  /* k-500 — matches Services' own headline (.services__headline's
+     tone-muted) per the user's request to bring all three section
+     headlines (this, hero__closing-headline, Services) to the same
+     color. Size matches .section-headline (same scale
+     hero__closing-headline uses) rather than a fixed fs-600. */
+  font-size: var(--section-headline-size);
+  letter-spacing: var(--section-headline-tracking);
+  text-wrap: balance;
+}
+
+/* Node 803:2499 — closes out the headline grid: a border-top rule the full
+   12 columns wide, with the service list on the left and a small
+   decorative swatch on the right. */
+.hero__meta-row {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-400);
+  border-top: 1px solid var(--k-700);
+  padding-top: var(--sp-400);
+}
+.hero__meta-tags {
+  margin: 0;
+  font-family: var(--font-primary);
+  font-weight: var(--fw-200);
+  font-size: var(--fs-300);
+  letter-spacing: -0.396px;
+  color: var(--k-500);
+  white-space: nowrap;
+}
+/* The pipe separators alone are k-700 — one step darker than the k-500 text
+   around them (node 803:2500's own two accent spans). */
+.hero__meta-divider { color: var(--k-700); }
+/* Replaces Figma node 804:2513's own flat placeholder rectangle (client
+   request) with a small looping version of the logo mark — sized to the
+   SVG's own intrinsic box, not stretched to fill a fixed swatch size. */
+.hero__meta-swatch {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* Each of the mosaic's 5 blocks scales on the X axis only (fill-box, so the
+   origin resolves against each block's own bounding box, not the whole
+   icon's) on an infinite loop, staggered per block for an organic
+   "breathing" effect rather than all 5 moving in lockstep. Source order
+   (nth-child, bottom row to top: red/purple/blue/green/gold) is also
+   top-to-bottom-then-back visually — row 1/3/5 (bottom, middle, top) anchor
+   from their own left edge, row 2/4 from their own right edge, so
+   neighboring rows grow in opposite directions along X rather than all
+   from the same side. */
+.elan-mark__block {
+  transform-box: fill-box;
+  animation: elan-mark-pulse 1.1s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+.elan-mark__block:nth-child(odd) { transform-origin: left center; }
+.elan-mark__block:nth-child(even) { transform-origin: right center; }
+.elan-mark__block:nth-child(1) { animation-delay: 0s; }
+.elan-mark__block:nth-child(2) { animation-delay: 0.07s; }
+.elan-mark__block:nth-child(3) { animation-delay: 0.14s; }
+.elan-mark__block:nth-child(4) { animation-delay: 0.21s; }
+.elan-mark__block:nth-child(5) { animation-delay: 0.28s; }
+@keyframes elan-mark-pulse {
+  0%, 100% { transform: scaleX(1); }
+  50% { transform: scaleX(0.55); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .elan-mark__block { animation: none; }
+}
+
+.hero__closing {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: calc(4 * var(--sp-700)) var(--section-padding);
+}
+
+/* z-index:0, plus position:relative + z-index:1 on .hero__closing-grid
+   below, keeps this behind the headline text — a positioned element with
+   z-index:auto still paints above unpositioned/default-stacking siblings
+   regardless of DOM order, so without the grid's own z-index these bands
+   (positioned, explicit z-index:0) could still end up on top depending on
+   the browser. */
+.hero__closing-bands {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: flex;
+  flex-direction: column;
+  pointer-events: none;
+}
+/* --band-scale is written directly onto .hero__closing-bands every frame by
+   Home()'s scroll listener (a ref, not React state — see its comment), a
+   continuous function of scroll position rather than a triggered-once
+   class, so scrolling back up runs this in reverse on its own. No CSS
+   transition here — the JS-side LERP is what smooths it frame to frame;
+   stacking a transition on top would just add redundant lag. Each band
+   grows out from its own transform-origin (below). */
+.hero__closing-band {
+  height: 100%;
+  background: var(--k-800);
+  opacity: 0.5;
+  transform: scaleX(var(--band-scale, 0));
+  will-change: transform;
+}
+.hero__closing-band--outer {
+  width: 60%;
+  align-self: flex-end;
+  transform-origin: left;
+}
+.hero__closing-band--inner {
+  transform-origin: right;
+  width: 40%; }
+
+.hero__closing-grid {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1440px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
+  padding: var(--sp-700) 0;
+}
+.hero__closing-content {
+  grid-column: 2 / span 3;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-300);
+}
+/* Below 480px, .hero__closing-grid's own content item runs full width
+   too — see .hero__headline-row's matching override above. */
+@media (max-width: 768px) {
+  .hero__closing-content { grid-column: 1 / -1; }
+}
+.hero__closing-headline { color: var(--k-500); }
+.hero__closing-eyebrow { color: var(--k-500); }
+.hero__closing-eyebrow--top { padding-bottom: var(--sp-400); }
+
+/* ------------------------------------------------------------------ */
+/*  Services — "What can I help you with?", Figma node 721:1990         */
+/* ------------------------------------------------------------------ */
+
+.services {
+  padding: var(--section-padding);
+  padding-bottom:var(--sp-700);
+  position: relative;
+}
+
+.services:after{
+  content: '';
+  background: var(--k-800);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  border-radius: 100%;
+  z-index: -1;
+  opacity: .6;
+  /* blur(100px) over a box this size (as tall as the whole section, often
+     taller than the viewport itself once the 3 cards are stacked) is one
+     of the most expensive things a mobile GPU can be asked to composite
+     while it scrolls past — a very plausible source of the hitch reported
+     specifically around this section. 40px still reads as the same soft
+     ambient glow at this scale (it's a blurred blob, not something with
+     edges to preserve) for a fraction of the render cost. */
+  filter: blur(40px);
+  will-change: transform;
+}
+
+/* At 900px+ .services__grid reserves its own bottom padding for the
+   transform-shifted ladder cards (see its comment below) — stacking this
+   sp-700 on top of that was pure dead space between Services and Process,
+   with nothing animating through it. The grid's own reservation already
+   covers what's actually needed there. */
+@media (min-width: 900px) {
+  .services { padding-bottom: 0; }
+}
+
+.services__inner {
+  margin: 0 auto;
+  max-width: 1440px;
+
+}
+
+
+/* will-change: same reasoning as .service-card's own comment below — this
+   is translateY()'d every scroll event (Services' header-parallax effect)
+   but was missing the hint every other scroll-animated element here has. */
+.services__header { padding: var(--sp-600) var(--sp-400); will-change: transform; }
+/* Figma (721:1991/721:1993) sets the headline in a 3-col grid, spanning only
+   the first two columns — i.e. 2/3 of the row — rather than the full width;
+   matched here at the same 900px breakpoint the cards row itself goes flat
+   3-across, so headline and grid share one consistent column rhythm. Below
+   that the headline stays full-width, matching the stacked/stairstep card
+   layout at those sizes. */
+@media (min-width: 900px) {
+  .services__header { max-width: calc(2 / 3 * 100%); }
+}
+
+/* Mobile: a plain stack. Mobile Vertical (480px) through Tablet (768px): a
+   12-col, 3-row diagonal stairstep — each card shifted one row down and
+   further right than the last (spans narrow and columns shift right again
+   at 768px). Laptop (900px) and up: a flat row where the cards themselves
+   ladder in height toward the right — left card sits 2×sp-600 down, center
+   1×sp-600, right flush to the top. That margin-top is no longer set here,
+   though: Services' scroll listener in Portfolio.jsx now writes it
+   directly per card, animating from a shared 128px (as the row enters the
+   viewport) to each card's own ladder value (once the row reaches
+   viewport-center) — see that effect's comment for the parallax logic. This
+   rule stays as the pre-JS/no-JS fallback, set to the animation's shared
+   start value rather than any one card's end value. */
+.services__grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-400);
+  margin-top: 24px;
+}
+@media (min-width: 480px) {
+  .services__grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-rows: repeat(3, auto);
+    gap: var(--sp-500);
+  }
+  .service-card:nth-child(1) { grid-column: 3 / span 10; grid-row: 1; }
+  .service-card:nth-child(2) { grid-column: 2 / span 10; grid-row: 2; }
+  .service-card:nth-child(3) { grid-column: 1 / span 10; grid-row: 3; }
+}
+@media (min-width: 768px) {
+  .service-card:nth-child(1) { grid-column: 7 / span 6; }
+  .service-card:nth-child(2) { grid-column: 4 / span 6; }
+  .service-card:nth-child(3) { grid-column: 1 / span 6; }
+}
+@media (min-width: 900px) {
+  .services__grid {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    /* Cards are shifted via transform now (see .service-card below and
+       Services' scroll listener in Portfolio.jsx), not margin-top —
+       transform doesn't affect layout, so this reserves the room the
+       shifted cards actually need instead: the larger of the shared 420px
+       start value (Portfolio.jsx's own START) and the tallest ladder end
+       value (2×sp-600). */
+    padding-bottom: max(320px, calc(2 * var(--sp-600)));
+  }
+  /* Pre-JS/no-JS fallback — the animation's start value. */
+  .service-card { transform: translateY(420px); }
+}
+
+.service-card {
+  position: relative;
+  overflow: hidden;
+  flex: 1;
+  min-width: 0; /* flex/grid items default to min-width:auto, which can push a card wider than its track when body copy is long */
+  display: flex;
+  flex-direction: column;
+  background: var(--k-900);
+  border-radius: 16px;
+  transform-origin: center;
+  max-width: 480px;
+  justify-self: center;
+  /* Animated via translateY()/scale() every scroll event (Services' own
+     effect in Portfolio.jsx) but never had this hint, unlike every other
+     scroll-animated element here (.process-card, .hero__closing-band, the
+     char-flip characters) — without it the browser promotes/demotes this
+     to its own GPU layer reactively as the animation starts and stops,
+     and that promotion/demotion is itself a likely source of the hitch
+     right as the section leaves the viewport (the animation "settling"
+     is exactly when a browser's heuristics decide the layer is no longer
+     worth keeping). will-change keeps the layer stable throughout. */
+  will-change: transform;
+}
+/* Tab strip + body block is the shared .card-tab/.card-tab__body — see
+   their comment in the "Text primitives" section near the top of this
+   file (same TabCard component Process's cards use). */
+
+/* ------------------------------------------------------------------ */
+/*  Process — "The process is what makes the difference", node 676:1513 */
+/* ------------------------------------------------------------------ */
+
+/* Process + Featured work share one wrapper here, matching Figma (node
+   676:1512): a single rounded k-100 panel with one diamond-pattern
+   background image sitting behind both sections, not two separately-backed
+   sections stacked on top of each other. */
+.process-work {
+  position: relative;
+  background-color: var(--k-0);
+  border-top-left-radius: var(--sp-600);
+  border-top-right-radius: var(--sp-600);
+    background-image: url(/src/assets/process-work-bg.svg);
+  background-size: cover;
+  background-position: center;
+}
+
+
+/* Mobile ("vertical", <768px): .process itself (the outer <section>, not
+   .process__section) is the scroll-room spacer, and .process__section is
+   the one sticky element — pinned as a single unit, headline on top and
+   cards filling the rest below it, so the headline stays visible the whole
+   time instead of scrolling away and leaving the cards to fill an empty gap
+   on their own. Once the cards finish stacking, the whole pinned section
+   releases together and the next one takes over. At 768px+ this reverts to
+   two independent side-by-side sticky columns (.process__aside/.process__cards
+   each pin separately, beside each other) — see those rules below. */
+.process {
+  position: relative;
+  z-index: 1;
+  /* svh, not dvh — same reasoning as .work__pin's own fix (see its comment
+     in this file): dvh recalculates live as the mobile browser's address
+     bar collapses/expands during the scroll this section is pinning
+     against, so the spacer's total scrollable height would shift mid-
+     gesture (or right as it settles), causing the stack's arrival/shrink
+     math to suddenly jump. svh is the stable minimum-chrome height and
+     never moves once read. */
+  height: 400svh;
+}
+@media (min-width: 768px) {
+  .process { height: auto; }
+}
+
+.process__section {
+  margin: 0 auto;
+  max-width: 1440px;
+  padding: var(--section-padding);
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  height: 100svh; /* see .process's own svh-not-dvh comment above */
+  overflow: hidden;
+  row-gap: var(--sp-600);
+}
+@media (min-width: 768px) {
+  .process__section {
+    position: static;
+    height: auto;
+    overflow: visible;
+    flex-direction: row;
+    align-items: flex-start;
+    column-gap: var(--process-col-gap);
+    /* The mobile rule's sp-700 top/bottom padding sits directly on top of
+       the 400dvh sticky-scroll row here (unlike mobile, where the row is
+       the sticky element itself and this padding insets its own pinned
+       content) — that's dead scroll before the row's sticky pin can even
+       engage, and again after it releases. .process__aside's own
+       justify-content:center still keeps the headline vertically centred
+       in the viewport once pinned regardless, so nothing relies on this
+       space existing. */
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
+
+.process__aside-wrap { width: 100%; }
+@media (min-width: 768px) {
+  .process__aside-wrap { flex: 1; height: 400svh; } /* svh, not dvh — see .process's comment */
+}
+
+/* Centered below 768px (cards and headline both stacked vertically in the
+   pinned .process__section, see its comment above) — left-aligned again at
+   768px+, next to the cards instead of above them. */
+.process__aside {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-600);
+  padding: var(--section-padding) 0;
+  text-align: center;
+}
+@media (min-width: 768px) {
+  .process__aside {
+    position: sticky;
+    top: 0;
+    height: 100svh; /* svh, not dvh — see .process's comment */
+    justify-content: center;
+    text-align: left;
+    /* Same principle as mobile's .process__section: the inset lives inside
+       the already-sticky box (border-box sizing absorbs it into the fixed
+       100dvh, so it costs no extra scroll) rather than on an ancestor
+       outside it — replaces the 32px above with the sp-700 that used to sit
+       on .process__section itself. */
+    padding: var(--sp-700) 0;
+  }
+}
+
+/* Node 747:5801, "Frame 126" — segmented progress indicator, one pill per
+   process card. Sits above .process__intro; .process__aside's own 24px gap
+   (above) is the spacing between them, not a margin here. Centered to match
+   .process__aside's own centered text below 768px, left like the aside's
+   text from 768px+. */
+.process__indicator {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  justify-content: center;
+}
+@media (min-width: 768px) {
+  .process__indicator { justify-content: flex-start; }
+}
+/* --indicator-active (0-1, written per segment by ProcessStack's scroll
+   listener in Portfolio.jsx) is a continuous blend, not a discrete on/off —
+   it's how much *this* card currently owns being "on top" of the stack, so
+   width/color crossfade smoothly between segments as the next card arrives
+   over the current one, rather than snapping. 32px/80px and k-300/k-500 are
+   the node's own inactive/active values. */
+.process__indicator-seg {
+  height: 4px;
+  border-radius: 2px;
+  flex-shrink: 0;
+  width: calc(32px + 48px * var(--indicator-active, 0));
+  background-color: color-mix(in srgb, var(--k-300), var(--k-500) calc(var(--indicator-active, 0) * 100%));
+}
+
+/* No more gap here — that spacing existed only to separate the headline
+   from the "The process makes the difference" eyebrow above it, which is
+   gone; .process__intro now wraps just the one headline. */
+.process__intro {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;}
+
+/* .process__cards-wrap just fills whatever vertical space .process__aside's
+   own height (above) doesn't take, within the pinned .process__section box
+   — flex:1 + min-height:0 so it can shrink to that, rather than growing the
+   sticky section past 100dvh. At 768px+ it goes back to being its own
+   400dvh scroll-room spacer for .process__cards' independent sticky column
+   — same formula/reasoning as .process, just per-column instead of for the
+   whole section: one viewport-height per card's entrance, plus one more for
+   .process__cards' own sticky height so the last card finishing its arrival
+   and the sticky release happen at the same scroll position, with no extra
+   held-in-place scrolling in between. Revisit both if PROCESS_STEPS' length
+   changes. */
+.process__cards-wrap { position: relative; width: 100%; flex: 1; min-height: 0; }
+@media (min-width: 768px) {
+  .process__cards-wrap { height: 400svh; } /* svh, not dvh — see .process's comment */
+}
+
+/* Cards inside are position:absolute, so it's this element's own box that
+   keeps them corralled; overflow:hidden clips a card still sliding up from
+   below the fold instead of letting it show through onto content further
+   down the page. Below 768px this box is just whatever height flex above
+   gives it — .process__section itself is the sticky element there, not
+   this. At 768px+ it becomes its own independent sticky element again,
+   pinned beside .process__aside rather than under it. */
+.process__cards { position: relative; height: 100%; overflow: hidden; }
+@media (min-width: 768px) {
+  .process__cards {
+    position: sticky;
+    top: 0;
+    height: 100svh; /* svh, not dvh — see .process's comment */
+    /* Same principle as .process__aside above — matches the sp-700 that
+       used to live on .process__section. border-box sizing absorbs it into
+       the fixed 100dvh rather than growing past it, and each card's
+       top: calc(N × sp-600) / ProcessStack's offsetTop reads are already
+       measured from this box's padding edge (the spec-defined containing
+       block for an absolute descendant), so this only shifts everything
+       down uniformly — the arrival/centring math doesn't need to change. */
+    padding: var(--sp-700) 0;
+  }
+}
+
+/* --card-arrive (0→1), --card-scale, --stack-shift, and --card-travel are
+   written directly onto each card by ProcessStack's scroll listener (a ref,
+   not React state/props — see its comment), so it never triggers a
+   re-render on scroll. All default so the initial paint (before the first
+   rAF tick) already shows the settled, centered stack rather than a flash
+   of off-screen or top-aligned cards. `top` stairsteps by order (1-indexed)
+   × sp-600 — each card's *resting* stacked offset relative to the others —
+   while the transform's translateY adds --stack-shift (recenters that whole
+   staggered block; same value on every card, so their relative offsets are
+   untouched) to the entrance offset (--card-travel below rest, interpolating
+   in as --card-arrive ramps 0→1). --card-travel is .process__cards' own
+   rendered height, not a flat 100dvh: on mobile that box is shorter than a
+   full viewport (see .process__cards in home.css), so starting a card a
+   full 100dvh below rest meant a chunk of its scroll allotment was spent
+   just closing the gap between "100dvh below" and the actual bottom edge of
+   a much shorter box, before any of it was even visible — empty scrolling
+   with nothing on screen. Starting it exactly one box-height below instead
+   means it's entering the visible area from the very first bit of scroll.
+   z-index rises with order so later cards cover earlier ones. */
+.process-card {
+  position: absolute;
+  left: 0;
+  right: 0;
+  transform: translateY(calc(var(--stack-shift, 0px) + (1 - var(--card-arrive, 1)) * var(--card-travel, 100svh))) scale(var(--card-scale, 1));
+  transform-origin: top center;
+  will-change: transform;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 16px;
+  background-color: var(--k-0);
+  box-shadow: 0 1px 2px rgba(17, 19, 24, 0.06), 0 8px 24px rgba(17, 19, 24, 0.08);
+  max-width: 480px;
+  margin-inline: auto;
+}
+.process-card:nth-child(1) { top: calc(1 * var(--sp-600)); z-index: 1; }
+.process-card:nth-child(2) { top: calc(2 * var(--sp-600)); z-index: 2; }
+.process-card:nth-child(3) { top: calc(3 * var(--sp-600)); z-index: 3; }
+/* Tab strip + body block is the shared .card-tab/.card-tab__body — see
+   their comment in the "Text primitives" section near the top of this
+   file. */
+
+/* ------------------------------------------------------------------ */
+/*  Work — "Featured work", node 676:1764                              */
+/* ------------------------------------------------------------------ */
+
+/* No background of its own — the shared .process-work panel (k-900) shows
+   through around the .work-card tiles. */
+/* The "spacer" — its height is set in JS (WorkSection in Portfolio.jsx),
+   to 100svh (.work__pin's own height) plus however many px .work__track
+   overflows its own viewport width by, so scrolling exactly that many px
+   into this section pins .work__pin, drags the track horizontally exactly
+   as far as it can go, and releases right as it runs out — see that
+   component's comment for the full mechanism. position:relative isn't
+   required for the sticky child below, but keeps this a clean containing
+   block for it regardless of ancestors. */
+.work { position: relative; z-index: 1; }
+
+/* Invisible sibling below .work__pin, mobile only — see WorkSection's
+   effect comment (Portfolio.jsx) for how its 200dvh height doubles as both
+   the pin's scroll-room and the track's progress denominator. display:none
+   above the breakpoint so it can't add stray height to the desktop spacer,
+   which still sizes itself via JS there. */
+.work__mobile-trigger { display: none; }
+@media (max-width: 768px) {
+  .work__mobile-trigger {
+    display: block;
+    height: 200dvh;
+    width: 100%;
+    pointer-events: none;
+  }
+}
+
+.work__pin {
+  position: sticky;
+  top: 0;
+  /* svh, not dvh: dvh recalculates live as a mobile browser's own chrome
+     (address bar) collapses/expands *during* the scroll this section is
+     actively hijacking, which was the actual bug — the spacer's total
+     scrollable height (100dvh + a fixed overflow-px in JS) would shift
+     mid-scroll, so the horizontal drag could fall short of or overshoot the
+     end. svh is the stable minimum-chrome height and never moves once
+     read, so the vertical-px-scrolled → horizontal-px-moved mapping stays
+     exact for the whole gesture. */
+  height: 100svh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: var(--k-900);
+}
+
+.work__inner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  /* width:100% (not just max-width) is load-bearing here: .work__inner is a
+     flex item of .work__pin (flex-direction:column) with margin:0 auto for
+     centering, and cross-axis auto-margins opt an item OUT of align-items:
+     stretch — without an explicit width the box instead shrink-wraps to its
+     widest child's max-content size, which is .work__track (intentionally
+     very wide — it holds every horizontally-scrolling card in one row). On
+     any viewport narrower than 1440px that shrink-wrapped width overshoots
+     the real viewport (clamped only by max-width, so it renders ~1440px
+     wide regardless of the actual screen), silently pushing anything
+     right-aligned in the header (the "View all work" button) off-canvas
+     past .work__pin's overflow:hidden edge — invisible, not just clipped a
+     little. Confirmed via iPad 9 (810px) and Galaxy S23 Ultra (412px)
+     viewports where the button rendered but sat entirely outside the
+     visible area. */
+  width: 100%;
+  margin: 0 auto;
+  max-width: 1440px;
+  padding: 48px var(--section-padding);
+  justify-content: center;
+}
+
+.work__header {
+  display: flex;
+  flex-direction: row;
+  gap: var(--sp-600);
+  flex-shrink: 0;
+  justify-content: space-between;
+}
+@media (min-width: 1440px) {
+  .work__header { flex-direction: row; align-items: flex-end; justify-content: space-between; }
+}
+
+/* Row, not a column — headline and the "View all work" button share one
+   line, the button pushed to the row's far end. width:100% so
+   justify-content:space-between actually has room to do that — without it,
+   .work__title (a flex item of .work__header, itself row+space-between at
+   1440px+) would just shrink to fit its own content instead of filling the
+   header's width. */
+.work__title { display: flex; flex-direction: row; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; width: 100%; }
+/* Links to the standalone /work archive page (WorkArchive) — not part of
+   node 676:1512, added just so that page is reachable from the UI. Uses
+   .btn-primary (see the JSX), the same button as this section's own "View
+   project" cards below. shrink-0 keeps it from being squeezed if the
+   headline wraps to two lines on a narrow viewport. */
+.work__view-all { flex-shrink: 0; }
+
+.work__filters { display: none; flex-direction: column; gap: 16px; }
+.work__filters-label {
+  margin: 0;
+  color: var(--k-900);
+  font-family: var(--font-primary);
+  font-weight: var(--fw-200);
+  font-size: var(--fs-400, 24px);
+  text-align: end;
+}
+
+@media (max-width: 1440px) {
+  .work__filters {
+    align-items: start;
+  }
+}
+
+
+.work__pills { display: flex; flex-direction: row-reverse; flex-wrap: wrap; align-items: center; justify-content: end; gap: 4px; }
+
+/* Small bordered pill — the same look for both the header's filter toggles
+   and each card's own tag chips (Figma styles them identically). */
+.pill-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--k-700);
+  border-radius: 2px;
+  padding: 4px 12px;
+  font-family: var(--font-primary);
+  font-weight: var(--fw-200);
+  font-size: var(--fs-200);
+  letter-spacing: 5%;
+  color: var(--k-900);
+  background: var(--k-0);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+.pill-outline--active {
+  background: var(--k-600);
+  border: 1px solid var(--k-300);
+  color: var(--k-0);
+  font-weight: var(--fw-200);}
+
+.work__clear {
+  font-family: var(--font-primary);
+  font-weight: var(--fw-100);
+  font-size: var(--fs-200);
+  color: var(--k-900);
+  background: none;
+  border: none;
+  padding: 0 16px;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+.work__clear:hover { opacity: 0.6; }
+
+/* Horizontal track (was a responsive 1/2/3-col grid before the section
+   became a pinned horizontal-scroll — see .work__pin/.work above): cards
+   laid out in a row, each a fixed width. width:max-content — not the
+   default flex-stretch — so the track's own box spans its full content,
+   first card to last, rather than just whatever's visible; the *viewport*
+   for this section is .work__pin (overflow:hidden) clipping it, one level
+   up, not the track sizing itself narrow to begin with. This also means
+   WorkSection's overflow measurement (Portfolio.jsx) can just read the
+   track's own offsetWidth directly as the true content width, instead of
+   summing every card's width by hand. align-items:center (not stretch) so
+   shorter/taller cards don't get forced to a shared height; the height
+   itself (flex:1 + min-height:0) still fills whatever vertical space
+   .work__header (flex-shrink:0, above) doesn't take within the 100svh pin
+   — flex:1 governs height here (the main axis of .work__inner's column
+   flex), independent of width:max-content overriding the cross axis. */
+.work__track {
+  display: flex;
+  flex-direction: row;
+  gap: var(--sp-400);
+  width: max-content;
+  min-height: 0;
+  margin-top: 48px;
+  /* Trailing inset so the last card ends with the same breathing room the
+     first one starts with (.work__inner's own left padding), instead of
+     stopping flush against .work__pin's clipped edge — counted into
+     offsetWidth automatically now that it's real padding on a
+     max-content-sized element. */
+  padding-right: var(--section-padding);
+}
+
+.work-card {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  flex: 0 0 auto;
+  /* One card fills .work__track's own visible width below 768px; two sit
+     side by side (accounting for one .work__track gap between them) at
+     768px+. % of the track's own box, deliberately NOT dvw: dvw measures
+     the raw viewport, which .work__track's actual visible area is NOT —
+     it's inset by .work__inner's own padding, capped once
+     max-width:1440px kicks in, and offset by the scrollbar's width on
+     desktop, so a dvw-sized card silently drifts out of sync with what's
+     actually visible (that mismatch was cutting cards off / leaving them
+     partly off-viewport). % always resolves against the track's real
+     rendered box, so it can't drift regardless of any of that. */
+  width: 100%;
+  height: 100%;
+  text-align: left;
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  width: calc(100dvw - (2 * var(--sp-400)));
+  max-width: 768px;
+}
+
+.work-card__image {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+}
+@media (max-width: 768px) {
+  .work-card__image {
+    aspect-ratio: 1 / 1;
+  }
+}
+
+.work-card__image img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+.work-card:hover .work-card__image img {
+  transform: scale(1.08); }
+
+/* node 701:1333's own tag chips — flat k-0/k-200-border/k-600-text pill,
+   the same for every tag (not the accent-per-tag color the project page's
+   own chips use, since these sit on a light card). Its own row between the
+   image and the body, not stacked above the title inside .work-card__body. */
+.work-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding-block: var(--section-padding) var(--sp-200);
+}
+.work-card__tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--k-900);
+  border-right: 1px solid var(--k-700);
+  padding: var(--sp-100) var(--sp-200);
+  font-family: var(--font-primary);
+  font-weight: var(--fw-200);
+  font-size: var(--fs-200);
+  color: var(--k-400);
+  white-space: nowrap;
+}
+
+.work-card__tag:last-child{
+  border: none;
+}
+
+/* Row: title on the left (flexes, wraps its own text), "View project"
+   button pinned to the bottom-right — matches node 701:1307/701:1308's own
+   items-end/justify-end + flex-[1_0_0] layout. */
+.work-card__body {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--sp-500);
+  padding: var(--section-padding) var(--sp-200);
+}
+
+.work-card__info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-400);
+  align-items: flex-start;
+  width: 100%;
+  min-width: 0;
+}
+
+.work-card__title {
+  margin: 0;
+  width: 100%;
+  font-family: var(--font-primary);
+  font-weight: var(--fw-200);
+  line-height: 1;
+  font-size: var(--fs-400-size);
+  letter-spacing: var(--fs-400-tracking);
+  color: var(--k-200);
+}
+
+/* .btn-secondary's own colors (dark text/border) assume a light background —
+   override them here to the same light-on-dark tokens .work-archive__pill
+   uses, now that this section's own background is dark (k-900). */
+.work-card .btn-secondary { color: var(--k-400); border-color: var(--k-600); }
+
+
+/* ------------------------------------------------------------------ */
+/*  Footer — node 676:2160                                             */
+/* ------------------------------------------------------------------ */
+
+.footer { background: var(--k-800); }
+
+.footer__inner {
+  margin: 0 auto;
+  max-width: 1440px;
+  padding: var(--sp-300);
+}
+
+.footer-card {
+  background: var(--k-900);
+  border-radius: 16px;
+  padding: var(--sp-500);
+  display: flex;
+  flex-direction: column;
+  /* Below 768px, headline/contact/meta stack in this one column — gap is
+     --sp-500 there; the grid layout at 768px+ (below) sets its own
+     column/row-gap instead. */
+  gap: var(--sp-500);
+  will-change: transform;
+  transform-origin: bottom;
+}
+@media (min-width: 768px) {
+  .footer-card {
+    display: grid;
+    /* Tablet/Laptop (nodes 787:2363/787:2356): headline col 1/span-6, form
+       col 8/span-5 — an even 6:5 split of the 12-col grid, filling flush to
+       the card's right edge. Desktop below narrows this to 7:5 instead. */
+    grid-template-columns: 6fr 5fr;
+    /* 24px (Tablet/Laptop's own gap-x) stepping to 32px at Desktop below —
+       was a flat 64px, roughly triple every frame's actual value. */
+    column-gap: var(--sp-300);
+    /* sp-500 (40 at this Tablet tier) — steps to section-padding at Laptop
+       below, which is what the Default/Laptop frames actually use for this
+       gap; Tablet's own frame uses sp-500 instead (see the two separate
+       code paths in node 676:2160 for the Tablet-vs-Laptop/Default group). */
+    row-gap: var(--sp-500);
+  }
+  .footer-card__intro { grid-column: 1; grid-row: 1; align-self: start; }
+  /* Row 1, right column only — node 676:2160's headline+form live in one
+     12-col grid row (form = col 8/span 5); the link/meta row below it is a
+     separate full-width sibling in the design, not part of that grid at
+     all, so .footer-card__contact must NOT span into row 2 too (it did
+     before, which put it directly on top of .footer-card__meta once that
+     was made full-width — same grid cell, two elements). */
+  .footer-card__contact { grid-column: 2; grid-row: 1; align-self: start; }
+  .footer-card__meta {
+    grid-column: 1 / -1;
+    grid-row: 2; }
+}
+
+@media (min-width: 900px) {
+  .footer-card { row-gap: var(--section-padding); }
+}
+@media (min-width: 1440px) {
+  /* Desktop (nodes 676:2130/676:2811): headline col 1/span-6, form
+     col 8/span-4 — the form's column stops one track short of the card's
+     right edge (track 12 unused), unlike Tablet/Laptop's flush 6:5 split.
+     7:5 approximates that extra trailing gap without a literal 12-col
+     grid. */
+  .footer-card { grid-template-columns: 7fr 5fr; column-gap: 32px; }
+}
+
+/* Groups the headline + subtitle so they grid-place as one unit — see the
+   768px+ rule above. sp-300 gap is node 676:2130's own Default-frame value
+   (flat 16px, not one of the responsive ramps); the other frames' resolved
+   gaps hover in the same 16-24px range, close enough not to need their own
+   per-breakpoint token. */
+.footer-card__intro { display: flex; flex-direction: column; gap: var(--sp-300); }
+
+.footer-card__headline {
+  margin: 0;
+  color: var(--k-400);
+  font-family: var(--font-primary);
+  font-weight: var(--fw-200);
+  line-height: 1;
+  font-size: var(--fs-600-size);
+  letter-spacing: var(--fs-600-tracking);
+  text-wrap: balance;
+}
+/* "awesome" in the footer headline — node 676:2130's own #e8e8e8 span,
+   which is k-200 exactly. */
+.footer-card__headline-accent {
+  color: var(--k-200);
+}
+/* Node 787:2351 — was missing entirely; every breakpoint pairs the headline
+   with this line. fs-300/18px doesn't vary by breakpoint (not in the
+   responsive ramp), so no media query needed here. */
+.footer-card__sub {
+  margin: 0;
+  color: var(--k-300);
+  font-family: var(--font-primary);
+  font-weight: var(--fw-100);
+  font-size: var(--fs-200);
+}
+
+.footer-card__contact { display: flex; flex-direction: column; gap: 24px; }
+.footer-card__contact .btn-primary { align-self: flex-start; }
+
+.footer-card__meta {
+  display: flex;
+  flex-direction: row;
+  gap: var(--sp-400);
+  border-top: 1px solid var(--k-700);
+  align-items: end;
+ }
+
+ @media (max-width: 600px){
+  .footer-card__meta {
+    flex-direction: column;
+    align-items: start;
+  }
+ }
+
+/* Node 676:2160's meta row — the four lines' PAIRING changes per
+   breakpoint, not just the layout, so this is a 4-cell grid with each
+   item's own area reassigned at each tier rather than two fixed wrapper
+   groups:
+   - Mobile (<480, node 773:3142): one stacked column, in DOM order.
+   - Mobile Vertical/Tablet (480-899px, nodes 773:3091/773:3040): two
+     columns, but interleaved — LinkedIn+email on the left, Behance+
+     copyright on the right. That's each frame's own resolved content, not
+     a mistake to normalize into the "social vs contact" grouping below.
+   - Laptop/Desktop (900px+, node 773:2438): one row, grouped the more
+     familiar way — LinkedIn+Behance clustered at the start, email+
+     copyright clustered at the end, with the middle "." column absorbing
+     the space between them.
+   Node 773:2438/773:3142's own border-t k-700 separator sits above this
+   row at every size. */
+.footer-meta__row {
+  display: flex;
+  align-items: start;
+  flex-wrap: wrap;
+  gap: var(--sp-400);
+  width: 100%;
+  padding-top: var(--section-padding);
+}
+
+@media (min-width: 900px) {
+  .footer-meta__row {
+    grid-template-columns: auto auto 1fr auto auto;
+    grid-template-areas: "linkedin behance . email copyright";
+  }
+}
+.footer-meta__row a,
+.footer-meta__row p {
+  margin: 0;
+  color: var(--k-0);
+  font-family: var(--font-primary);
+  font-weight: var(--fw-200);
+  font-size: var(--fs-200);
+  text-decoration: none;
+  white-space: nowrap;
+  opacity: 0.85;
+  transition: opacity 0.15s ease;
+}
+.footer-meta__row a:hover { opacity: 1; }
+div:has(.footer-meta__copyright){
+  width: 100%;
+}
+
+
+/* Overrides the shared nowrap above (needs the extra specificity to win) —
+   this cell now reads "© 2026 All rights reserved. · Privacy", which can
+   run tight enough on narrow phones to want a wrap rather than clipping. */
+.footer-meta__copyright {
+  margin: 0;
+  color: var(--k-0);
+  font-family: var(--font-primary);
+  font-weight: var(--fw-200);
+  font-size: var(--fs-200);
+  text-decoration: none;
+  opacity: 0.85;
+  transition: opacity 0.15s ease;
+  text-align: right;
+}
+@media (max-width: 900px) {
+  .footer-meta__copyright {
+    text-align: left;
+  }
+}
+
+
+/*.footer-stripe hiiden by display none*/
+.footer-stripe { display: none; height: 12px; border-radius: 4px; overflow: hidden; }
+.footer-stripe span { flex: 1; }
+/* Node 676:2468's stripe is a rotate-180 wrapper around a yellow→red row —
+   net visual effect is just the reversed left-to-right order below, so
+   that's written directly rather than adding an actual rotation. */
+.footer-stripe span:nth-child(1) { background: var(--red-20); }
+.footer-stripe span:nth-child(2) { background: var(--purple-20); }
+.footer-stripe span:nth-child(3) { background: var(--blue-20); }
+.footer-stripe span:nth-child(4) { background: var(--green-20); }
+.footer-stripe span:nth-child(5) { background: var(--yellow-20); }
+
+.footer-stripe > span{
+  transition: all .5s ease-in-out;
+}
+.footer-stripe > span:hover{
+  flex-grow: 5;
+}
+
+/* Still used by ContactForm's "sent" success state ("Message sent."). */
+.footer-field__label {
+  margin: 0;
+  color: var(--k-0);
+  font-family: var(--font-primary);
+  font-weight: var(--fw-200);
+  font-size: var(--fs-200);
+}
+/* Node 773:2812 — solid k-800 box, k-600 border (not k-700), flat 16px
+   padding on all sides (not 12/8) — the only style .footer-input needs to
+   carry since there's just the one field now. */
+.footer-input {
+  width: 100%;
+  border: 1px solid var(--k-600);
+  border-radius: 4px;
+  padding: var(--sp-200) var(--sp-300);
+  background: var(--k-800);
+  color: var(--k-300);
+  font-family: var(--font-primary);
+  font-weight: var(--fw-200);
+  font-size: var(--fs-300);
+}
+/* k-300, fs-200 (14px), ExtraLight italic — node 773:2813's own resolved
+   style, distinct from the input's own fs-300 typed-text size above. */
+.footer-input::placeholder { color: var(--k-300); font-style: italic; font-weight: var(--fw-100); font-size: var(--fs-200); }
+.footer-input:focus { outline: none; border-color: var(--k-900); }
+
+/* Footer's "Reach out" and SiteNav's "Contact" both just use .btn-primary
+   as defined above (node 773:2814/743:4263). align-self: flex-start below
+   is scoped to the footer's flex-column context — it's only correct there;
+   in SiteNav's flex-row .site-nav__links it would misalign the button
+   vertically against "Work" instead of centering it. */
+
+/* ------------------------------------------------------------------ */
+/*  Case study — reusable project template, node 676:5139               */
+/* ------------------------------------------------------------------ */
+
+.case-page { background: var(--k-900); }
+
+/* Padding wrapper around the shared nav (SiteNav, .site-nav) on case-study
+   pages — home gets this same outer padding for free from .hero__content;
+   case pages don't have that wrapper, so this supplies it instead. The nav
+   itself (border-bottom, transparent, non-sticky) is identical on every
+   page — no separate dark sticky bar here. */
+.case-nav {
+  padding: var(--section-padding) var(--section-padding) 0;
+  /* Home gets this same 1440px cap + centering for free from .hero's own
+     align-items:center; .page-shell (this wrapper's actual parent on
+     case-study pages) doesn't center its children, so it's replicated
+     here directly instead. */
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.case-hero {
+  display: flex;
+  flex-direction: column;
+  height: 600px;
+  max-width: 1440px;
+  margin: 0 auto;
+  /* Bottom padding carries the 225px band that used to be a separate
+     .case-hero__spacer child — fixed, not responsive, matching Figma's
+     literal value. .case-intro-card no longer floats over it (it's a
+     normal-flow child of .case-sections now), but the band still gives the
+     image some breathing room below it instead of running flush to the
+     section's own edge. */
+  padding: var(--section-padding);
+}
+
+.case-hero__image { position: relative; flex: 1; min-height: 0; border-radius: 16px; overflow: hidden; background: var(--k-800); }
+.case-hero__image img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+/* Below Laptop (node 676:5139), the hero isn't a fixed 600px band any more
+   — it's sized by its own 1920:1080 aspect ratio (and loses both its outer
+   padding and its rounded corners, running edge-to-edge), matching the
+   mobile frame; node 742:3072's fixed height + inset + radius above is a
+   Laptop/Desktop-only treatment. Declared after the base rules above so it
+   wins the cascade at equal specificity. */
+@media (max-width: 900px) {
+  .case-hero { height: auto; padding-inline: 0; }
+  .case-hero__image { flex: none; aspect-ratio: 1920 / 1080; border-radius: 0; }
+}
+
+/* No longer absolutely positioned over .case-hero — a normal-flow child of
+   .case-sections now (its first one), so it lays out and centers the same
+   way .case-section-text does (max-width + margin:0 auto within a
+   width:100% flex slot) instead of floating over the hero's bottom edge. */
+.case-intro-card {
+  max-width: 768px;
+  margin: 0 auto;
+  background: var(--k-900);
+  border-radius: 16px;
+  /* pt/px = section-padding, pb = sp-600 (nodes 742:3080/789:2587) — the
+     extra bottom padding is what actually separates the card from the media
+     stack below; .case-sections carries no gap of its own for that. */
+  padding: var(--section-padding) var(--section-padding) var(--sp-600);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-500);
+}
+.case-intro-card__top { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-400); }
+@media (max-width: 480px) {
+  .case-intro-card__top { flex-direction: column; align-items: flex-start; }
+}
+.case-intro-card__back {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-200);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: var(--font-primary);
+  font-size: var(--fs-200);
+  color: var(--k-200);
+  transition: opacity 0.15s ease;
+}
+.case-intro-card__back:hover { opacity: 0.7; }
+.case-intro-card__tags { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 4px; }
+/* Node 742:3072 — filled/colored, not .pill-outline's bordered/transparent
+   look (that one's shared with the Work section's filter buttons): k-900
+   bg, k-700 border always, with the tag's own accent-20 as its text color
+   via --tag-color (set inline per span in Portfolio.jsx, from
+   WORK_TAG_ACCENT — same mapping the work-card tags use). */
+.case-intro-card__tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--k-900);
+  border-right: 1px solid var(--k-700);
+  padding: var(--sp-100) var(--sp-200);
+  font-family: var(--font-primary);
+  font-weight: var(--fw-200);
+  font-size: var(--fs-200);
+  color: var(--tag-color, var(--k-400));
+  white-space: nowrap;
+}
+.case-intro-card__tag:last-child{
+  border: none;
+}
+.case-intro-card__tag:first-child{
+  padding-left: 0;
+}
+
+/* Project title (h1) — nodes 742:3091/789:2598: fs-600 (32/36/44/48) at
+   k-200, NOT .section-headline's fs-800 alias (40/54/64/72) or its k-300
+   .tone-light — that shared class reads much bigger and lighter than this
+   node's own resolved size/color, and is left alone since Home/Services/
+   case-next all depend on its current scale. */
+.case-title {
+  font-family: var(--font-primary);
+  font-weight: var(--fw-200);
+  line-height: 1.04;
+  margin: 0;
+  font-size: var(--fs-600-size);
+  letter-spacing: var(--fs-600-tracking);
+  color: var(--k-200);
+  text-wrap: balance;
+}
+
+/* The one headline a Paragraph gets — "Introduction", a section's tag label
+   ("Visual Identity"), or a block's own heading ("Challenge"/"Solution").
+   No separate eyebrow sub-heading any more (that was a second, smaller
+   level stacked under this one — see Paragraph in Portfolio.jsx). */
+.case-text-block__label {
+  margin: 0 0 var(--sp-200);
+  font-family: var(--font-primary);
+  font-weight: var(--fw-300);
+  font-size: var(--fs-300);
+  letter-spacing: -0.18px;
+  color: var(--k-200);
+}
+/* sp-400 gap between stacked paragraphs (node 789:2601's text-body) — also
+   carries the body copy's own k-400 (not .tone-muted's k-500, which reads
+   as a different, darker "muted" tone used elsewhere on the site). */
+.case-text-block__body { display: flex; flex-direction: column; gap: var(--sp-400); }
+.case-text-block__body p { margin: 0; color: var(--k-400); }
+
+.case-sections {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 var(--section-padding) var(--sp-500);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: -100px;
+  z-index: 1;
+  position: relative;
+}
+
+@media (max-width: 768px){
+  .case-sections{
+    padding: 0;
+    margin-top: calc(var(--sp-600) * -1);
+  }
+}
+.case-sections > * { width: 100%; }
+.case-section-text { max-width: 768px; padding: var(--sp-500) var(--section-padding); }
+/* Inside .case-intro-card (the "Introduction"/section Paragraphs), the card
+   itself already supplies the outer padding and the sp-400 gap between its
+   children — .case-section-text's own padding would just double it up. */
+.case-intro-card .case-section-text { padding: 0; }
+
+/* All of a project's media, separate from its text (nodes 742:3094/
+   676:5204) — no gap of its own is needed before this in .case-sections;
+   .case-intro-card's own sp-600 bottom padding already is that spacing.
+   The gap *between* media groups (762:3095/676:5212) is its own ramp: 16 on
+   mobile up to 64 at Desktop, not one of the shared sp-* tokens. */
+.case-media-stack { display: flex; flex-direction: column; gap: var(--sp-300); }
+@media (min-width: 768px) { .case-media-stack { gap: 32px; } }
+@media (min-width: 900px) { .case-media-stack { gap: 48px; } }
+@media (min-width: 1440px) { .case-media-stack { gap: 64px; } }
+
+.case-next {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  border-top: 1px solid var(--k-700);
+  padding: var(--sp-700) var(--section-padding);
+  cursor: pointer;
+}
+.case-next__inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-400);
+}
+.case-next__label { margin: 0 0 8px; color: var(--k-400); }
+.case-next__name { margin: 0; }
+.case-next__arrow { color: var(--k-0); transition: transform 0.2s ease; flex-shrink: 0; }
+.case-next:hover .case-next__arrow { transform: translate(4px, -4px); }
+
+/* ------------------------------------------------------------------ */
+/*  Privacy policy (PrivacyPolicy in Portfolio.jsx)                     */
+/* ------------------------------------------------------------------ */
+
+/* A plain centered column — not hero-coupled like .case-sections (whose
+   -100px margin-top exists specifically to pull .case-intro-card up over a
+   hero image this page doesn't have), so it isn't reused here. */
+.privacy-page {
+  max-width: 768px;
+  margin: 0 auto;
+  padding: var(--sp-600) var(--section-padding) var(--sp-700);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-400);
+}
+.privacy-page__back { margin-bottom: var(--sp-300); }
+.privacy-page .case-section-text { padding: 0; }
+
+/* ------------------------------------------------------------------ */
+/*  Work archive (WorkArchive in Portfolio.jsx) — node 676:1763         */
+/* ------------------------------------------------------------------ */
+
+.work-archive {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 var(--section-padding) var(--sp-600);
+}
+
+/* Node 676:1674's own row — a flat 48px in the design, not one of the
+   responsive sp-* tokens (only one device variant was given for this
+   page). */
+.work-archive__header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 48px 0;
+}
+.work-archive__eyebrow { margin: 0; color: var(--blue-60); }
+/* Flat fs-800 at every size — not .section-headline's fs-900/800/700 alias
+   (the homepage's own "Featured work" uses that instead, resolving to
+   fs-700/64px at desktop; this standalone page reads bigger, fs-800/72px,
+   per node 676:1678's own resolved style). */
+.work-archive__headline {
+  margin: 0;
+  color: var(--k-400);
+  font-family: var(--font-primary);
+  font-weight: var(--fw-200);
+  line-height: 1.03;
+  font-size: var(--fs-800-size);
+  letter-spacing: var(--fs-800-tracking);
+}
+
+/* node 798:2804 — same filter pills as the homepage's own WorkSection
+   (.work__filters/.pill-outline), but that pair is styled for a light
+   background (white pill, k-900 text) and .work__filters itself is
+   force-hidden (display:none) there besides. This page's own dark
+   background needs its own transparent/bordered version instead. 40px
+   margin-top (on top of .work-archive__header's own 16px gap) reproduces
+   node 676:1674's 56px gap between the headline and this block. */
+.work-archive__filters {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+.work-archive__filters-label {
+  margin: 0;
+  color: var(--k-400);
+  font-family: var(--font-primary);
+  font-weight: var(--fw-200);
+  font-size: var(--fs-400, 24px);
+  line-height: 1;
+}
+.work-archive__pills { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; }
+.work-archive__pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--k-600);
+  background: none;
+  padding: 6px 8px;
+  font-family: var(--font-primary);
+  font-weight: var(--fw-200);
+  font-size: var(--fs-200);
+  color: var(--k-400);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+.work-archive__pill:hover { border-color: var(--k-400); color: var(--k-200); }
+.work-archive__pill--active { background: var(--k-700); border-color: var(--k-700); color: var(--k-0); }
+.work-archive__clear {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  padding: 6px 8px;
+  font-family: var(--font-primary);
+  font-weight: var(--fw-100);
+  font-size: var(--fs-200);
+  color: var(--k-200);
+  cursor: pointer;
+  white-space: nowrap;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  opacity: 0.85;
+  transition: opacity 0.15s ease;
+}
+.work-archive__clear:hover { opacity: 1; }
+.work-archive__empty {
+  margin: 0;
+  padding: var(--sp-600) 0;
+  color: var(--k-400);
+  font-family: var(--font-primary);
+  font-size: var(--fs-300);
+  text-align: center;
+}
+
+.work-archive__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+@media (min-width: 768px) {
+  .work-archive__grid { grid-template-columns: 1fr 1fr; }
+}
+
+/* node 701:1333's "procejt-card" — a different visual treatment from the
+   homepage track's own .work-card (bordered/transparent tags here instead
+   of filled ones, a plain text title instead of .work-card__title, and the
+   CTA sitting in the same row as the title rather than below it). */
+.archive-card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+}
+.archive-card__image { position: relative; width: 100%; aspect-ratio: 1384 / 984; }
+.archive-card__image img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+/* Two rows stacked in .archive-card__column: tags on top, name+button
+   below in .archive-card__row. Tags reuse .case-intro-card__tag (the
+   project page's own chip) rather than a dedicated style here. */
+.archive-card__column {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding: 16px 8px 32px;
+}
+.archive-card__tags { display: flex; flex-wrap: wrap; gap: 4px; }
+.archive-card__row { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-width: 0; }
+.archive-card__title {
+  margin: 0;
+  min-width: 0;
+  color: var(--k-400);
+  font-family: var(--font-primary);
+  font-weight: var(--fw-200);
+  line-height: 1;
+  font-size: var(--fs-400, 24px);
+  letter-spacing: -0.72px;
+}
+.archive-card__cta { flex-shrink: 0; }
+
+/* ------------------------------------------------------------------ */
+/*  Loading screen (LoadingScreen in Portfolio.jsx)                     */
+/* ------------------------------------------------------------------ */
+
+/* Registers --cut as an animatable percentage — without this, a browser
+   treats a custom property purely as an opaque string substitution and
+   won't smoothly transition it, even though it's referenced inside an
+   otherwise-transitionable mask-image gradient below. */
+@property --cut {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 0%;
+}
+
+/* Durations/eases here are plain numbers, not var()s fed from JS — kept
+   this way on purpose so they're visible/editable directly in this file.
+   They must be kept in sync BY HAND with FILL_MS/SLIDE_MS/LOADER_EASE/
+   SLIDE_EASE in Portfolio.jsx, which drive the actual setTimeout schedule
+   (state flips to "filled"/"sliding" at those same moments) — if one
+   changes, change the other to match, or the fill/slide will finish
+   visually before (or after) the timers that unmount this screen do. */
+.loading-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background-color: var(--k-900);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  /* Reveal starts at the center and grows outward to both edges: a
+     transparent (revealed) band centered on the logo's own (shifted)
+     center — not the container's flat 50% — spanning from center-minus-cut
+     to center-plus-cut, growing as --cut rises, with black (still-covered)
+     above and below it shrinking to match. The center is 50% - 30px: the
+     same -25%-of-120px-LOGO_HEIGHT the logo itself is moved up by
+     (.loading-screen__mark's translateY(-25%)), so the slide visibly opens
+     from the logo's middle instead of the viewport's. Off-center means the
+     two edges are no longer equidistant, so --cut can't just run to a flat
+     50% the way it did when centered — the *farther* edge (now the bottom,
+     50%+30px away) needs more than that to fully clear. --cut runs 0%→56%
+     instead: comfortably past 50%+30px on any realistic viewport height,
+     so both edges are fully revealed by the end (the nearer, top edge
+     clears earlier and just stays clear — harmless). */
+  --cut: 0%;
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, black calc(50% - 30px - var(--cut)), transparent calc(50% - 30px - var(--cut)), transparent calc(50% - 30px + var(--cut)), black calc(50% - 30px + var(--cut)), black 100%);
+  mask-image: linear-gradient(to bottom, black 0%, black calc(50% - 30px - var(--cut)), transparent calc(50% - 30px - var(--cut)), transparent calc(50% - 30px + var(--cut)), black calc(50% - 30px + var(--cut)), black 100%);
+  transition: --cut 1100ms cubic-bezier(0.37, 0, 0.63, 1); /* SLIDE_MS/SLIDE_EASE */
+}
+.loading-screen--sliding { --cut: 56%; }
+
+/* LOGO_HEIGHT (Portfolio.jsx) is 120 — hardcoded here too, same reasoning
+   as the durations above. */
+/* translateY(-25%) is relative to the element's own height (a CSS
+   percentage transform's built-in behavior), so this stays exactly 25% of
+   whatever height actually is if LOGO_HEIGHT (Portfolio.jsx) changes again
+   — not a value that needs to be kept in sync by hand like the px ones
+   above/below it. */
+.loading-screen__mark { position: relative; height: 120px; width: 120px; transform: translateY(-25%); }
+
+.loading-screen__fill {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  height: 0%;
+  transition: height 3000ms cubic-bezier(0.65, 0, 0.35, 1); /* FILL_MS/LOADER_EASE */
+}
+.loading-screen__fill--filled { height: 100%; }
+
+.loading-screen__fill-mark { position: absolute; bottom: 0; left: 0; height: 120px; width: 120px; }

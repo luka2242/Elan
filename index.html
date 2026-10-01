@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Elan Creative Studio — Brand & Graphic Design</title>
+    <meta
+      name="description"
+      content="I help companies build visual identity that gains trust and credibility. Freelance brand and graphic design, Elan Creative Studio."
+    />
+
+    <!-- Favicon — favicon.png (512x512) covers modern browsers/any size,
+         favicon-16x16.png keeps the browser-tab icon crisp at that exact
+         size, apple-touch-icon.png is what iOS uses for home-screen icons.
+         favicon.ico (wraps both PNGs) is a fallback for old browsers and
+         crawlers/services that request /favicon.ico directly regardless of
+         the <link> tags below. -->
+    <link rel="icon" type="image/png" sizes="any" href="/favicon.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <!-- Canonical + Open Graph / Twitter card — the preview shown when this
+         link is shared in Slack, LinkedIn, iMessage, etc. Absolute
+         https://elancreativestudio.com URLs now that the site has a real
+         production domain — most unfurlers won't fetch a root-relative
+         image/URL. Portfolio.jsx's per-route effect overwrites og:url/
+         og:image/canonical (and the two titles/descriptions) for project
+         pages and /privacy; these are just the homepage's own defaults. -->
+    <link rel="canonical" href="https://elancreativestudio.com/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://elancreativestudio.com/" />
+    <meta property="og:title" content="Brand and graphic design" />
+    <meta
+      property="og:description"
+      content="I help companies build visual identity that gains trust and credibility."
+    />
+    <meta property="og:image" content="https://elancreativestudio.com/og-image.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Brand and graphic design" />
+    <meta
+      name="twitter:description"
+      content="I help companies build visual identity that gains trust and credibility."
+    />
+    <meta name="twitter:image" content="https://elancreativestudio.com/og-image.png" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
