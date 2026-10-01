@@ -801,7 +801,7 @@ function SectionMedia({ id, tag, blocks, alt }) {
 // paths — with one flat color. Used by LoadingScreen, which needs the mark
 // as a single silhouette rather than its usual multicolor branding; every
 // other caller leaves it unset and gets the normal look untouched.
-function ElanLogoMark({ height = 90, wordmarkColor = "#292929", symbolOnly = false, fluid = false, monochrome, animatePulse = false }) {
+function ElanLogoMark({ height = 90, wordmarkColor = "#292929", symbolOnly = false, fluid = false, monochrome }) {
   // The mosaic occupies x 65-105 of the full 105-wide artwork, so the symbol
   // is just a cropped viewBox with the wordmark paths dropped.
   const ratio = symbolOnly ? 40 / 40 : 105 / 40;
@@ -834,15 +834,11 @@ function ElanLogoMark({ height = 90, wordmarkColor = "#292929", symbolOnly = fal
       <path d="M10.2162 40C8.17812 40 6.38513 39.5408 4.83722 38.6224C3.31511 37.6777 2.12838 36.4051 1.27703 34.8044C0.425675 33.2038 0 31.3801 0 29.3333C0 28.1 0.154791 26.9454 0.464373 25.8696C0.799753 24.7937 1.25123 23.8229 1.81879 22.9569C2.41216 22.0648 3.12162 21.3038 3.94717 20.674C4.79852 20.018 5.74017 19.5195 6.77211 19.1783C7.82984 18.8372 8.96498 18.6666 10.1775 18.6666C11.5964 18.6666 12.9121 18.8897 14.1247 19.3358C15.3372 19.7819 16.382 20.4772 17.2592 21.4219C18.1363 22.3665 18.8071 23.6129 19.2715 25.1611C19.7616 26.7093 19.9809 28.5986 19.9293 30.829H4.21805V27.2078H14.1247C14.0215 26.4469 13.8538 25.804 13.6216 25.2792C13.3894 24.7544 13.0927 24.3345 12.7316 24.0197C12.3962 23.7048 12.0092 23.4817 11.5706 23.3505C11.1578 23.1931 10.6935 23.1144 10.1775 23.1144C9.60994 23.1144 9.09397 23.2062 8.6296 23.3899C8.16522 23.5736 7.76535 23.8491 7.42997 24.2165C7.12038 24.5576 6.8495 24.9774 6.61731 25.476C6.41093 25.9746 6.25614 26.5518 6.15294 27.2078C6.04975 27.8639 5.99815 28.5723 5.99815 29.3333C5.99815 30.6191 6.14004 31.7343 6.42383 32.6789C6.73341 33.5974 7.19778 34.3058 7.81694 34.8044C8.46191 35.303 9.30036 35.5523 10.3323 35.5523C11.1578 35.5523 11.8544 35.3948 12.422 35.0799C13.0153 34.7388 13.4281 34.2796 13.6603 33.7023H19.9293C19.7487 34.7782 19.2715 35.8015 18.4975 36.7724C17.7236 37.7171 16.64 38.4912 15.2469 39.0947C13.8796 39.6982 12.2027 40 10.2162 40Z" fill={monochrome || wordmarkColor}/>
         </>
       )}
-      {/* animatePulse (the hero's small looping mark, see .elan-mark__block
-          in home.css) adds a shared class to each of these 5 mosaic blocks
-          only — never on by default, so every other place this component
-          renders (nav, loading screen, footer) is unaffected. */}
-      <path className={animatePulse ? "elan-mark__block" : undefined} d="M97 32.8C97 32.3582 96.6418 32 96.2 32H81.0001V39.2C81.0001 39.6418 81.3582 40 81.8 40H96.2C96.6418 40 97 39.6418 97 39.2V32.8Z" fill={monochrome || "#E53917"}/>
-      <path className={animatePulse ? "elan-mark__block" : undefined} d="M81.0001 24H73.8001C73.3583 24 73.0001 24.3582 73.0001 24.8V31.2C73.0001 31.6418 73.3583 32 73.8001 32L81.0001 32L81.0001 24Z" fill={monochrome || "#7055F2"}/>
-      <path className={animatePulse ? "elan-mark__block" : undefined} d="M105 16.8C105 16.3582 104.642 16 104.2 16H81.0001L81.0001 24L104.2 24C104.642 24 105 23.6418 105 23.2V16.8Z" fill={monochrome || "#1397BF"}/>
-      <path className={animatePulse ? "elan-mark__block" : undefined} d="M81 8H65.8C65.3582 8 65 8.35817 65 8.8V15.2C65 15.6418 65.3582 16 65.8 16L81.0001 16L81 8Z" fill={monochrome || "#2DB359"}/>
-      <path className={animatePulse ? "elan-mark__block" : undefined} d="M97 0.8C97 0.358172 96.6418 0 96.2 0H81.8C81.3582 0 81.0001 0.358167 81 0.799991L81 8L96.2 8C96.6418 8 97 7.64183 97 7.2V0.8Z" fill={monochrome || "#FFC32C"}/>
+      <path d="M97 32.8C97 32.3582 96.6418 32 96.2 32H81.0001V39.2C81.0001 39.6418 81.3582 40 81.8 40H96.2C96.6418 40 97 39.6418 97 39.2V32.8Z" fill={monochrome || "#E53917"}/>
+      <path d="M81.0001 24H73.8001C73.3583 24 73.0001 24.3582 73.0001 24.8V31.2C73.0001 31.6418 73.3583 32 73.8001 32L81.0001 32L81.0001 24Z" fill={monochrome || "#7055F2"}/>
+      <path d="M105 16.8C105 16.3582 104.642 16 104.2 16H81.0001L81.0001 24L104.2 24C104.642 24 105 23.6418 105 23.2V16.8Z" fill={monochrome || "#1397BF"}/>
+      <path d="M81 8H65.8C65.3582 8 65 8.35817 65 8.8V15.2C65 15.6418 65.3582 16 65.8 16L81.0001 16L81 8Z" fill={monochrome || "#2DB359"}/>
+      <path d="M97 0.8C97 0.358172 96.6418 0 96.2 0H81.8C81.3582 0 81.0001 0.358167 81 0.799991L81 8L96.2 8C96.6418 8 97 7.64183 97 7.2V0.8Z" fill={monochrome || "#FFC32C"}/>
     </svg>
   );
 }
@@ -2612,6 +2608,64 @@ const WORK_ORDER_IDS = [
 ];
 const WORK_ORDERED_PROJECTS = WORK_ORDER_IDS.map((id) => PROJECTS.find((p) => p.id === id)).filter(Boolean);
 
+const HERO_SERVICES = ["Brand", "Graphic", "Web"];
+const ROTATE_INTERVAL_MS = 2600;
+
+// Cycles through `words` in place: the outgoing word's letters roll up and
+// out of a clipped line while the next word's letters roll up in behind
+// them, each letter a few ms after the one before, with a touch of blur on
+// the way through. The wrapper's width eases between the measured width of
+// each word so the text that follows it ("Design") glides instead of
+// jumping. Starts cycling only once `active` (heroReady), so it doesn't run
+// behind the loading screen.
+function RotatingWord({ words, active = true }) {
+  const [index, setIndex] = useState(0);
+  const [widths, setWidths] = useState([]);
+  const measureRefs = useRef([]);
+
+  useEffect(() => {
+    const measure = () => setWidths(measureRefs.current.map((el) => (el ? el.getBoundingClientRect().width : 0)));
+    measure();
+    // Zalando Sans loads from Google Fonts, so re-measure once it's in.
+    document.fonts?.ready.then(measure);
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, [words]);
+
+  useEffect(() => {
+    if (!active) return;
+    const id = setInterval(() => setIndex((i) => (i + 1) % words.length), ROTATE_INTERVAL_MS);
+    return () => clearInterval(id);
+  }, [active, words.length]);
+
+  const prev = (index - 1 + words.length) % words.length;
+  return (
+    <span className="word-rotator" style={widths[index] ? { width: widths[index] } : undefined} aria-hidden="true">
+      {words.map((word, i) => (
+        <span
+          key={word}
+          className={
+            "word-rotator__word" +
+            (i === index ? " is-active" : i === prev ? " is-leaving" : "")
+          }
+        >
+          {[...word].map((ch, c) => (
+            <span key={c} className="word-rotator__char" style={{ "--i": c }}>
+              {ch}
+            </span>
+          ))}
+        </span>
+      ))}
+      {/* Invisible copies used only to measure each word's natural width. */}
+      {words.map((word, i) => (
+        <span key={"m-" + word} ref={(el) => (measureRefs.current[i] = el)} className="word-rotator__measure">
+          {word}
+        </span>
+      ))}
+    </span>
+  );
+}
+
 function Home({ onOpenProject, onOpenWorkArchive, activeTags, setActiveTags, toggleTag, onCta, heroReady }) {
   const filtered = useMemo(() => {
     if (activeTags.length === 0) return HOME_FEATURED_PROJECTS;
@@ -2767,18 +2821,17 @@ function Home({ onOpenProject, onOpenWorkArchive, activeTags, setActiveTags, tog
               </p>
             </div>
             {/* Node 803:2499 — bordered meta row closing out the headline
-                grid: the service list on the left, and (client request,
-                replacing Figma node 804:2513's own flat placeholder
-                rectangle) a small looping version of the logo mark — same
-                mosaic as the loading screen, each block pulsing in place
-                on its own stagger via .elan-mark__block in home.css. */}
+                grid: the service line on the left, cycling Brand / Graphic /
+                Web in front of "Design" (RotatingWord), and a download link
+                for the CV on the right, in place of the old looping logo
+                mark (client request). */}
             <div className="hero__meta-row">
-              <p className="hero__meta-tags">
-                Brand <span className="hero__meta-divider">|</span> Graphic <span className="hero__meta-divider">|</span> Web Design
+              <p className="hero__meta-tags" aria-label="Brand, Graphic and Web Design">
+                <RotatingWord words={HERO_SERVICES} active={heroReady} /> Design
               </p>
-              <div className="hero__meta-swatch" aria-hidden="true">
-                <ElanLogoMark height={20} symbolOnly animatePulse monochrome="var(--k-400)" />
-              </div>
+              <a className="hero__cv-link" href="/CV_Luka-Ivanovic.pdf" download="CV_Luka-Ivanovic.pdf">
+                Get my CV
+              </a>
             </div>
           </div>
         </div>
