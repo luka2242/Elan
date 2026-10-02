@@ -2830,7 +2830,7 @@ function Home({ onOpenProject, onOpenWorkArchive, activeTags, setActiveTags, tog
                 <RotatingWord words={HERO_SERVICES} active={heroReady} /> Design
               </p>
               <a className="hero__cv-link" href="/CV_Luka-Ivanovic.pdf" download="CV_Luka-Ivanovic.pdf">
-                Get my CV
+                Download my resume
               </a>
             </div>
           </div>
