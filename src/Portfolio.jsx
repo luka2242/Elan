@@ -55,21 +55,26 @@ import COMPASS_10 from "./assets/compass/10.webp";
 import COMPASS_11 from "./assets/compass/11.webp";
 import INJECTING_COVER from "./assets/injecting/cover.webp";
 import INJECTING_INTRO from "./assets/injecting/intro.webp";
-import INJECTING_PRINT_01 from "./assets/injecting/01.webp";
-import INJECTING_PRINT_02 from "./assets/injecting/02-01.webp";
-import INJECTING_PRINT_02_2 from "./assets/injecting/02-02.webp";
-import INJECTING_PRINT_03 from "./assets/injecting/03.webp";
-import INJECTING_PRINT_04 from "./assets/injecting/04.webp";
-import INJECTING_PRINT_05 from "./assets/injecting/05.webp";
-import INJECTING_PRINT_06 from "./assets/injecting/06.webp";
-import INJECTING_PRINT_06_2 from "./assets/injecting/06-02.webp";
-import INJECTING_PRINT_07 from "./assets/injecting/07.webp";
-import INJECTING_PRINT_08 from "./assets/injecting/08.webp";
-import INJECTING_PRINT_09 from "./assets/injecting/09.webp";
-import INJECTING_PRINT_10 from "./assets/injecting/10.webp";
-import INJECTING_PRINT_11 from "./assets/injecting/11.webp";
-import INJECTING_PRINT_11_2 from "./assets/injecting/11-02.webp";
-import INJECTING_PRINT_12 from "./assets/injecting/12.webp";
+import INJECTING_01 from "./assets/injecting/01.webp";
+import INJECTING_02 from "./assets/injecting/02-01.webp";
+import INJECTING_02_2 from "./assets/injecting/02-02.webp";
+import INJECTING_03 from "./assets/injecting/03.webp";
+import INJECTING_04 from "./assets/injecting/04.webp";
+import INJECTING_05 from "./assets/injecting/05.webp";
+import INJECTING_06 from "./assets/injecting/06.webp";
+import INJECTING_06_2 from "./assets/injecting/06-02.webp";
+import INJECTING_07 from "./assets/injecting/07.webp";
+import INJECTING_08 from "./assets/injecting/08.webp";
+import INJECTING_09 from "./assets/injecting/09.webp";
+import INJECTING_10 from "./assets/injecting/10.webp";
+import INJECTING_11 from "./assets/injecting/11.webp";
+import INJECTING_11_2 from "./assets/injecting/11-02.webp";
+import INJECTING_12 from "./assets/injecting/12.webp";
+import INJECTING_13 from "./assets/injecting/13.webp";
+import INJECTING_14 from "./assets/injecting/14.webp";
+import INJECTING_15 from "./assets/injecting/15.webp";
+import INJECTING_16 from "./assets/injecting/16.webp";
+import INJECTING_17 from "./assets/injecting/17.webp";
 import MARINA_INTRO from "./assets/marina/intro.webp";
 import MARINA_01 from "./assets/marina/01.webp";
 import MARINA_02 from "./assets/marina/02.webp";
@@ -101,6 +106,10 @@ import NRG_05 from "./assets/nrg/05.webp";
 import NRG_06 from "./assets/nrg/06.webp";
 import NRG_07 from "./assets/nrg/07.webp";
 import NRG_08 from "./assets/nrg/08.webp";
+import NEWS_01 from "./assets/news/01.webp";
+import NEWS_02 from "./assets/news/02.webp";
+import NEWS_03 from "./assets/news/03.webp";
+import NEWS_04 from "./assets/news/04.webp";
 
 /* ------------------------------------------------------------------ */
 /*  Taxonomy — one accent color per discipline. Used as filter pills,  */
@@ -275,18 +284,23 @@ const PROJECTS = [
           },
         ],
         media: [
-          { type: "full", src: INJECTING_PRINT_01, ratio: "1920 / 1080", fit: "cover", alt: "Injecting logo — a shield-shaped \"I\" mark — in white on a dark concrete-textured background." },
-          { type: "pair", srcA: INJECTING_PRINT_02, srcB: INJECTING_PRINT_02_2, ratioA: "1920 / 1080", ratioB: "1920 / 1080", fit: "cover", altA: "Business card mockup in black and white for Injecting with the tagline \"Trajna rešenja za prodiranje vode kroz beton\" (permanent solutions against water penetrating concrete).", altB: "Close-up of Injecting business cards for Stefan Tepić, General Manager, showing contact details and a QR code." },
-          { type: "full", src: INJECTING_PRINT_03, ratio: "1920 / 1080", fit: "cover", alt: "Vector outline of the INJECTING wordmark shown with pen-tool anchor points, on a light grey background." },
-          { type: "full", src: INJECTING_PRINT_04, ratio: "1920 / 1080", fit: "cover", alt: "Billboard mockup reading \"Permanent solutions for water leakage in concrete objects\" next to a photo of a worker in an orange hard hat drilling anchor points into a cracked concrete wall." },
-          { type: "full", src: INJECTING_PRINT_05, ratio: "1920 / 1080", fit: "cover", alt: "The Injecting shield-and-\"I\" icon logo shown in four color combinations — black on white, white on black, white outline on black, and solid black on white." },
-          { type: "pair", srcA: INJECTING_PRINT_06, srcB: INJECTING_PRINT_06_2, ratioA: "1920 / 1080", ratioB: "1920 / 1080", fit: "cover", altA: "Technical brochure cover titled \"Tehnologija gela za hidroizolaciju\" (waterproofing gel technology) with a close-up photo of gel bubbles.", altB: "Outdoor directional sign reading \"R&D center,\" \"Offices,\" and \"Warehouse\" beneath the Injecting logo." },
-          { type: "full", src: INJECTING_PRINT_07, ratio: "1920 / 1080", fit: "cover", alt: "Two-page brochure spread on a perforated metal background: one side reading \"Eksperti za trajnu sanaciju betonskih konstrukcija\" with the shield icon, the other a sample letterhead page with placeholder body text and Injecting's company details." },
-          { type: "full", src: INJECTING_PRINT_08, ratio: "1920 / 1080", fit: "cover", alt: "Injecting LinkedIn company page mockup — profile photo, \"Concrete reparation experts · 6.762 followers,\" Follow/Visit website buttons, and a banner reading \"Permanent concrete leakage rehabilitation\" over a photo of anchor points in a cracked wall." },
-          { type: "full", src: INJECTING_PRINT_09, ratio: "1920 / 1080", fit: "cover", alt: "Three Instagram post mockups for @inject-ing: \"Experts advice: How to spot water leaking in concrete?\" over a cracked wall photo, a \"Case study: Rehabilitation of a concrete slab in an underground garage\" post, and \"Experts advice: Permanent solutions for concrete rehabilitation\" over a photo of a worker drilling into a cracked wall." },
-          { type: "full", src: INJECTING_PRINT_10, ratio: "1920 / 1080", fit: "cover", alt: "Three Injecting-branded flags in white, a black-and-white pattern, and solid black, flying against a cloudy sky." },
-          { type: "pair", srcA: INJECTING_PRINT_11, srcB: INJECTING_PRINT_11_2, ratioA: "1920 / 1080", ratioB: "1920 / 1080", fit: "cover", altA: "The tagline \"Permanent Concrete Rehabilitation\" and inject-ing.rs wrapped on the side of a black company van with a concrete-textured surface pattern.", altB: "A conference lanyard badge reading \"Concrete Experts Conference\" with the name Stefan Tepić, Organizator i predavač." },
-          { type: "full", src: INJECTING_PRINT_12, ratio: "1920 / 1080", fit: "cover", alt: "Billboard reading \"Experts advice: Permanent repair of concrete cracks caused by water ingress,\" next to a close-up photo of a concrete crack filled with waterproofing gel." },
+          { type: "full", src: INJECTING_01, ratio: "1920 / 1080", fit: "cover", alt: "Injecting logo — a shield-shaped \"I\" mark — in white on a dark concrete-textured background." },
+          { type: "pair", srcA: INJECTING_02, srcB: INJECTING_02_2, ratioA: "1920 / 1080", ratioB: "1920 / 1080", fit: "cover", altA: "Business card mockup in black and white for Injecting with the tagline \"Trajna rešenja za prodiranje vode kroz beton\" (permanent solutions against water penetrating concrete).", altB: "Close-up of Injecting business cards for Stefan Tepić, General Manager, showing contact details and a QR code." },
+          { type: "full", src: INJECTING_03, ratio: "1920 / 1080", fit: "cover", alt: "Vector outline of the INJECTING wordmark shown with pen-tool anchor points, on a light grey background." },
+          { type: "full", src: INJECTING_04, ratio: "1920 / 1080", fit: "cover", alt: "Billboard mockup reading \"Permanent solutions for water leakage in concrete objects\" next to a photo of a worker in an orange hard hat drilling anchor points into a cracked concrete wall." },
+          { type: "full", src: INJECTING_05, ratio: "1920 / 1080", fit: "cover", alt: "The Injecting shield-and-\"I\" icon logo shown in four color combinations — black on white, white on black, white outline on black, and solid black on white." },
+          { type: "pair", srcA: INJECTING_06, srcB: INJECTING_06_2, ratioA: "1920 / 1080", ratioB: "1920 / 1080", fit: "cover", altA: "Technical brochure cover titled \"Tehnologija gela za hidroizolaciju\" (waterproofing gel technology) with a close-up photo of gel bubbles.", altB: "Outdoor directional sign reading \"R&D center,\" \"Offices,\" and \"Warehouse\" beneath the Injecting logo." },
+          { type: "full", src: INJECTING_07, ratio: "1920 / 1080", fit: "cover", alt: "Two-page brochure spread on a perforated metal background: one side reading \"Eksperti za trajnu sanaciju betonskih konstrukcija\" with the shield icon, the other a sample letterhead page with placeholder body text and Injecting's company details." },
+          { type: "full", src: INJECTING_08, ratio: "1920 / 1080", fit: "cover", alt: "Injecting LinkedIn company page mockup — profile photo, \"Concrete reparation experts · 6.762 followers,\" Follow/Visit website buttons, and a banner reading \"Permanent concrete leakage rehabilitation\" over a photo of anchor points in a cracked wall." },
+          { type: "full", src: INJECTING_09, ratio: "1920 / 1080", fit: "cover", alt: "Three Instagram post mockups for @inject-ing: \"Experts advice: How to spot water leaking in concrete?\" over a cracked wall photo, a \"Case study: Rehabilitation of a concrete slab in an underground garage\" post, and \"Experts advice: Permanent solutions for concrete rehabilitation\" over a photo of a worker drilling into a cracked wall." },
+          { type: "full", src: INJECTING_10, ratio: "1920 / 1080", fit: "cover", alt: "Three Injecting-branded flags in white, a black-and-white pattern, and solid black, flying against a cloudy sky." },
+          { type: "pair", srcA: INJECTING_11, srcB: INJECTING_11_2, ratioA: "1920 / 1080", ratioB: "1920 / 1080", fit: "cover", altA: "The tagline \"Permanent Concrete Rehabilitation\" and inject-ing.rs wrapped on the side of a black company van with a concrete-textured surface pattern.", altB: "A conference lanyard badge reading \"Concrete Experts Conference\" with the name Stefan Tepić, Organizator i predavač." },
+          { type: "full", src: INJECTING_12, ratio: "1920 / 1080", fit: "cover", alt: "Billboard reading \"Experts advice: Permanent repair of concrete cracks caused by water ingress,\" next to a close-up photo of a concrete crack filled with waterproofing gel." },
+          { type: "full", src: INJECTING_13, ratio: "1920 / 1080", fit: "cover", alt: "Hero section \"Permanent repair of concrete cracks caused by water ingress" },
+          { type: "full", src: INJECTING_14, ratio: "1920 / 1080", fit: "cover", alt: "Hero section \"Permanent repair of concrete cracks caused by water ingress" },
+          { type: "full", src: INJECTING_15, ratio: "1920 / 1080", fit: "cover", alt: "Hero section \"Permanent repair of concrete cracks caused by water ingress" },
+          { type: "full", src: INJECTING_16, ratio: "1920 / 1080", fit: "cover", alt: "Hero section \"Permanent repair of concrete cracks caused by water ingress" },
+          { type: "full", src: INJECTING_17, ratio: "1920 / 1080", fit: "cover", alt: "Hero section \"Permanent repair of concrete cracks caused by water ingress" },
         ],
       },
     ],
@@ -494,12 +508,53 @@ const PROJECTS = [
       },
     ],
   },
+  {
+    id: "newsletters",
+    name: "Newsletters Design",
+    category: "Digital Design",
+    tagline: "Email newsletters design.",
+    description:
+      "NRG Cockpit is an energy management platform designed to give construction teams a clear overview of energy use across projects, equipment and connected infrastructure. It brings data from grid connections, batteries, solar systems and charging stations into one place, helping teams understand how energy is being used across a construction site.",
+    tags: ["user-interface"],
+    coverImage: NRG_COVER,
+    coverImageSquare: NRG_INTRO_1_1,
+    coverAlt: "Laptop mockup of NRG Cockpit's Device Status Report dashboard — Offline Stations, Faulted Sockets, device status and occupied-substatus breakdowns, a map, and timeline charts — against a dark rock-textured background.",
+    introImage: NRG_INTRO_16_9,
+    introAlt: "Laptop mockup of NRG Cockpit's Device Status Report dashboard — Offline Stations, Faulted Sockets, device status and occupied-substatus breakdowns, a map, and timeline charts — against a dark rock-textured background.",
+    sections: [
+      {
+        tag: "user-interface",
+        body: [
+          {
+            heading: "Challenge",
+            text: [
+              "Managing energy across construction sites involves large amounts of technical data coming from multiple devices and systems. The challenge was to transform this complexity into an interface that could be understood quickly by different users - from detailed equipment monitoring to an immediate overview of an entire project.",
+              "The platform also needed to support both real-time monitoring and historical analysis, while remaining scalable as new projects, equipment and energy sources were added.",
+            ],
+          },
+          {
+            heading: "Solution",
+            text: [
+              "NRG Cockpit was designed as a modular dashboard system that organizes complex energy data into clear layers. Users can move from a portfolio-level overview to individual projects and equipment, while dedicated dashboards separate live performance from historical trends.",
+              "Consistent data visualizations, structured equipment profiles and focused energy metrics make information easier to compare and act on. The system extends to large-screen narrowcasting, translating operational data into simple, easy-to-read insights for teams on site.",
+            ],
+          },
+        ],
+        media: [
+          { type: "full", src: NEWS_01, ratio: "1920 / 1080", fit: "cover", alt: "MacBook mockup of NRG Cockpit's \"Charging Stations Overall\" dashboard, showing Transactions, kWh Charged, Error Transactions and CO2 Reduced stat tiles plus Overall Stats, Transactions Timeline and Unique Users charts, with a sidebar for Projects, Equipment and Energy Profiles." },
+          { type: "full", src: NEWS_02, ratio: "1920 / 1080", fit: "cover", alt: "NRG Cockpit's color system reference sheet — rows of accent color swatches from tint 100 to 900 across six hues, plus a neutral grayscale palette." },
+          { type: "full", src: NEWS_03, ratio: "1920 / 1080", fit: "cover", alt: "Angled MacBook mockup of NRG Cockpit's Transaction Details drawer — charging point, transaction ID, income, date, duration and CO2 saved — next to a blurred dashboard with stat cards and a map." },
+          { type: "full", src: NEWS_04, ratio: "1920 / 1080", fit: "cover", alt: "NRG Cockpit component library page: reusable chart cards, a project-permissions toggle list, a metrics/progress-bar card, a Download Report panel, and a map with a current-energy summary row." },
+        ],
+      },
+    ],
+  },
   // Madera Apartments — pulled off the site for now (not deleted, just
   // commented out; re-enable by uncommenting). Marina Dorćol used to be
   // here too — it's a real, live entry above now.
-  /*
-  {
-    id: "madera-apartments-visual-identity",
+  
+  /*{
+    id: "madera",
     name: "Madera Apartments",
     category: "Branding",
     tagline: "Visual identity system for Madera Apartments.",
@@ -515,8 +570,8 @@ const PROJECTS = [
       },
       { tag: "visual-identity", body: "Visual identity system for Madera Apartments, carried through a deep forest-green and brass palette." },
     ],
-  },
-  */
+  },*/
+  
 ];
 
 /* ------------------------------------------------------------------ */
@@ -2607,6 +2662,8 @@ const WORK_ORDER_IDS = [
   "nrg-cockpit",
   "marina-dorcol",
   "social-media-design",
+  "newsletters",
+  "madera",
   "compass-project",
   "edil-italiana",
 ];
