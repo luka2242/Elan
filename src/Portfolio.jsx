@@ -106,6 +106,9 @@ import NRG_05 from "./assets/nrg/05.webp";
 import NRG_06 from "./assets/nrg/06.webp";
 import NRG_07 from "./assets/nrg/07.webp";
 import NRG_08 from "./assets/nrg/08.webp";
+import NEWS_COVER from "./assets/news/intro-16-9.webp";
+import NEWS_INTRO_16_9 from "./assets/news/intro-16-9.webp";
+import NEWS_INTRO_1_1 from "./assets/news/intro-1-1.webp";
 import NEWS_01 from "./assets/news/01.webp";
 import NEWS_02 from "./assets/news/02.webp";
 import NEWS_03 from "./assets/news/03.webp";
@@ -514,38 +517,24 @@ const PROJECTS = [
     category: "Digital Design",
     tagline: "Email newsletters design.",
     description:
-      "NRG Cockpit is an energy management platform designed to give construction teams a clear overview of energy use across projects, equipment and connected infrastructure. It brings data from grid connections, batteries, solar systems and charging stations into one place, helping teams understand how energy is being used across a construction site.",
-    tags: ["user-interface"],
-    coverImage: NRG_COVER,
-    coverImageSquare: NRG_INTRO_1_1,
-    coverAlt: "Laptop mockup of NRG Cockpit's Device Status Report dashboard — Offline Stations, Faulted Sockets, device status and occupied-substatus breakdowns, a map, and timeline charts — against a dark rock-textured background.",
-    introImage: NRG_INTRO_16_9,
-    introAlt: "Laptop mockup of NRG Cockpit's Device Status Report dashboard — Offline Stations, Faulted Sockets, device status and occupied-substatus breakdowns, a map, and timeline charts — against a dark rock-textured background.",
+      "A collection of email newsletter designs created for brands across the technology and consumer electronics industries. From product launches and promotional campaigns to product highlights and brand updates, each newsletter combines visual storytelling with clear, structured layouts designed for digital communication.",
+    tags: ["digital-design"],
+    coverImage: NEWS_COVER,
+    coverImageSquare: NEWS_INTRO_1_1,
+    coverAlt: "Collection on email newsletters design for various clients and brands.",
+    introImage: NEWS_INTRO_16_9,
+    introAlt: "Collection on email newsletters design for various clients and brands.",
     sections: [
       {
-        tag: "user-interface",
-        body: [
-          {
-            heading: "Challenge",
-            text: [
-              "Managing energy across construction sites involves large amounts of technical data coming from multiple devices and systems. The challenge was to transform this complexity into an interface that could be understood quickly by different users - from detailed equipment monitoring to an immediate overview of an entire project.",
-              "The platform also needed to support both real-time monitoring and historical analysis, while remaining scalable as new projects, equipment and energy sources were added.",
-            ],
-          },
-          {
-            heading: "Solution",
-            text: [
-              "NRG Cockpit was designed as a modular dashboard system that organizes complex energy data into clear layers. Users can move from a portfolio-level overview to individual projects and equipment, while dedicated dashboards separate live performance from historical trends.",
-              "Consistent data visualizations, structured equipment profiles and focused energy metrics make information easier to compare and act on. The system extends to large-screen narrowcasting, translating operational data into simple, easy-to-read insights for teams on site.",
-            ],
-          },
-        ],
+        tag: "digital-design",
+        body: [],
         media: [
           { type: "full", src: NEWS_01, ratio: "1920 / 1080", fit: "cover", alt: "MacBook mockup of NRG Cockpit's \"Charging Stations Overall\" dashboard, showing Transactions, kWh Charged, Error Transactions and CO2 Reduced stat tiles plus Overall Stats, Transactions Timeline and Unique Users charts, with a sidebar for Projects, Equipment and Energy Profiles." },
           { type: "full", src: NEWS_02, ratio: "1920 / 1080", fit: "cover", alt: "NRG Cockpit's color system reference sheet — rows of accent color swatches from tint 100 to 900 across six hues, plus a neutral grayscale palette." },
           { type: "full", src: NEWS_03, ratio: "1920 / 1080", fit: "cover", alt: "Angled MacBook mockup of NRG Cockpit's Transaction Details drawer — charging point, transaction ID, income, date, duration and CO2 saved — next to a blurred dashboard with stat cards and a map." },
           { type: "full", src: NEWS_04, ratio: "1920 / 1080", fit: "cover", alt: "NRG Cockpit component library page: reusable chart cards, a project-permissions toggle list, a metrics/progress-bar card, a Download Report panel, and a map with a current-energy summary row." },
         ],
+
       },
     ],
   },
