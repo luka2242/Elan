@@ -891,11 +891,16 @@ function ElanLogoMark({ height = 90, wordmarkColor = "#292929", symbolOnly = fal
 // onLogoClick/onWorkClick go home from a case-study page, or scroll to the
 // work section when already on the home page; onCta always scrolls to the
 // footer contact form.
-function SiteNav({ onLogoClick, onWorkClick, onCta }) {
+function SiteNav({ onLogoClick, onWorkClick, onCta, symbolOnly = false }) {
   return (
     <nav className="site-nav">
       <button className="site-nav__logo-btn" onClick={onLogoClick} aria-label="Elan Creative Studio">
-        <ElanLogoMark height={36} wordmarkColor="#ffffff" />
+        <ElanLogoMark
+          height={36}
+          wordmarkColor={symbolOnly ? "#1c1c1c" : "#ffffff"}
+          symbolOnly={symbolOnly}
+          monochrome={symbolOnly ? "#1c1c1c" : undefined}
+        />
       </button>
       <div className="site-nav__links">
         <button className="site-nav__link" onClick={onWorkClick}>
@@ -1586,7 +1591,7 @@ function CharFlipRevealText({ text, className, accentWords = [] }) {
     <span ref={rootRef} className={`char-flip ${className || ""}`}>
       {words.map((word, wi) => {
         if (word === "\n") {
-          pos += 1;
+          pos += 2;
           return <br key={wi} aria-hidden />;
         }
         const wordStart = pos;
@@ -1616,14 +1621,8 @@ function CharFlipRevealText({ text, className, accentWords = [] }) {
   );
 }
 
-// Matches CharFlipAutoChars' own default staggerStep (.02s) and
-// .char-flip-auto__char's CSS transition-duration (.6s) — named constants,
-// not just inline numbers, so charFlipRevealMs (below) can compute exactly
-// when a given headline's own reveal actually finishes, for sequencing
-// other things off of it (the hero's line-separator, for one) instead of
-// guessing/hardcoding a delay by eye.
+// Matches CharFlipAutoChars' default per-character stagger.
 const CHAR_FLIP_STAGGER_MS = 20;
-const CHAR_FLIP_DURATION_MS = 600;
 // Shared "how far tipped back" starting pose for BOTH flip variants —
 // CharFlipRevealText's continuously scroll-scrubbed one (consumed directly
 // below, in its own per-frame transform string) and CharFlipAutoChars' CSS-
@@ -1636,19 +1635,6 @@ const CHAR_FLIP_DURATION_MS = 600;
 const CHAR_FLIP_ROTATE_DEG = 45;
 const CHAR_FLIP_DEPTH_PX = 16;
 
-// How long, in ms, `text` takes to fully reveal via CharFlipAutoChars once
-// its own `visible` flips true — every real character (not "\n" line-break
-// tokens or the untracked inter-word spaces) gets staggerStep more
-// transition-delay than the last, so the last one to *start* is the
-// (n-1)th; it then takes its own full transition-duration to finish.
-function charFlipRevealMs(text) {
-  const charCount = text
-    .split(" ")
-    .filter((word) => word !== "\n")
-    .reduce((sum, word) => sum + [...word].length, 0);
-  return (charCount - 1) * CHAR_FLIP_STAGGER_MS + CHAR_FLIP_DURATION_MS;
-}
-
 // Time-driven variant of "effect 4" (see CharFlipRevealText above) — CSS-
 // transitioned per character instead of continuously scroll-scrubbed: each
 // character transitions exactly once, staggered by transitionDelay, the
@@ -1658,7 +1644,13 @@ function charFlipRevealMs(text) {
 // center trigger), just applied per character here with effect 4's flip/
 // depth properties instead of blur/lift. Shared render between the two
 // trigger variants below; only what flips `visible` differs.
-function CharFlipAutoChars({ text, visible, staggerStep = CHAR_FLIP_STAGGER_MS / 1000, accentWords = [] }) {
+function CharFlipAutoChars({
+  text,
+  visible,
+  staggerStep = CHAR_FLIP_STAGGER_MS / 1000,
+  accentWords = [],
+  accentColors,
+}) {
   const words = useMemo(() => text.split(" "), [text]);
   // [start, end) character ranges within the ORIGINAL text (spaces
   // included), one per accentWords entry — computed against the full
@@ -1669,18 +1661,18 @@ function CharFlipAutoChars({ text, visible, staggerStep = CHAR_FLIP_STAGGER_MS /
       accentWords
         .map((phrase) => {
           const start = text.indexOf(phrase);
-          return start === -1 ? null : [start, start + phrase.length];
+          return start === -1 ? null : [start, start + phrase.length, phrase];
         })
         .filter(Boolean),
     [text, accentWords]
   );
-  const isAccentAt = (pos) => accentRanges.some(([start, end]) => pos >= start && pos < end);
+  const accentAt = (pos) => accentRanges.find(([start, end]) => pos >= start && pos < end)?.[2];
 
   let charIndex = 0;
   let pos = 0; // walks the original text in lockstep with `words`, spaces included
   return words.map((word, wi) => {
     if (word === "\n") {
-      pos += 1;
+      pos += 2;
       return <br key={wi} aria-hidden />;
     }
     const wordStart = pos;
@@ -1690,12 +1682,15 @@ function CharFlipAutoChars({ text, visible, staggerStep = CHAR_FLIP_STAGGER_MS /
         <span className="char-flip-auto__word">
           {[...word].map((ch, ci) => {
             const idx = charIndex++;
-            const accent = isAccentAt(wordStart + ci);
+            const accent = accentAt(wordStart + ci);
             return (
               <span
                 key={ci}
                 className={`char-flip-auto__char${visible ? " is-visible" : ""}${accent ? " char-flip-auto__char--accent" : ""}`}
-                style={{ transitionDelay: `${(idx * staggerStep).toFixed(2)}s` }}
+                style={{
+                  transitionDelay: `${(idx * staggerStep).toFixed(2)}s`,
+                  ...(accent && accentColors?.[accent] ? { color: accentColors[accent] } : {}),
+                }}
               >
                 {ch}
               </span>
@@ -1712,7 +1707,7 @@ function CharFlipAutoChars({ text, visible, staggerStep = CHAR_FLIP_STAGGER_MS /
 // (heroReady, then an optional extra `delay`), full stop, same reasoning as
 // AutoRevealText: right at the top of the page, so it shouldn't also have
 // to satisfy a scroll-position check.
-function AutoCharFlipRevealText({ text, className, delay = 0, accentWords }) {
+function AutoCharFlipRevealText({ text, className, delay = 0, accentWords, accentColors }) {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -1729,7 +1724,7 @@ function AutoCharFlipRevealText({ text, className, delay = 0, accentWords }) {
       className={`char-flip-auto ${className || ""}`}
       style={{ "--char-flip-rotate": `${CHAR_FLIP_ROTATE_DEG}deg`, "--char-flip-depth": `${CHAR_FLIP_DEPTH_PX}px` }}
     >
-      <CharFlipAutoChars text={text} visible={visible} accentWords={accentWords} />
+      <CharFlipAutoChars text={text} visible={visible} accentWords={accentWords} accentColors={accentColors} />
     </span>
   );
 }
@@ -1810,7 +1805,7 @@ function ScrollCharFlipRevealText({ text, className, repeat = false }) {
 // `tone` overrides both the title's and body's text-color tone together
 // (e.g. Process's now-light k-0 card needs tone-dark; Services' still-dark
 // k-900 card keeps the defaults below unset).
-function TabCard({ cardRef, className, tabColor, tab, secondaryTab, title, body, glow, titleTone = "light", bodyTone = "muted" }) {
+function TabCard({ cardRef, className, tabColor, tab, secondaryTab, title, body, glow, titleTone = "dark", bodyTone = "muted" }) {
   return (
     <div ref={cardRef} className={className}>
       {glow}
@@ -2119,7 +2114,8 @@ function Services() {
     <section className="services">
       <div className="services__inner">
         <div ref={headerRef} className="services__header">
-          <h2 className="section-headline tone-muted services__headline">
+          <div class="eyebrow">My specialization</div>
+          <h2 className="section-headline services__headline">
             <CharFlipRevealText
               text={"Full scope of services to build memorable brand"}
               accentWords={["memorable"]}
@@ -2136,7 +2132,6 @@ function Services() {
               tab={item.title}
               title={item.eyebrow}
               body={item.body}
-              glow={<div className={`card-glow card-glow--${item.glowColor}`} aria-hidden="true" />}
             />
           ))}
         </div>
@@ -2302,7 +2297,7 @@ function ProcessStack() {
               ))}
             </div>
             <div className="process__intro">
-              <h2 className="section-headline tone-dark">
+              <h2 className="section-headline tone-light">
                 <ScrollCharFlipRevealText text={"The process built \n around your goals"} repeat />
               </h2>
             </div>
@@ -2657,13 +2652,6 @@ const WORK_ORDERED_PROJECTS = WORK_ORDER_IDS.map((id) => PROJECTS.find((p) => p.
 const HERO_SERVICES = ["Brand", "Graphic", "Web"];
 const ROTATE_INTERVAL_MS = 2600;
 
-// Cycles through `words` in place: the outgoing word's letters roll up and
-// out of a clipped line while the next word's letters roll up in behind
-// them, each letter a few ms after the one before, with a touch of blur on
-// the way through. The wrapper's width eases between the measured width of
-// each word so the text that follows it ("Design") glides instead of
-// jumping. Starts cycling only once `active` (heroReady), so it doesn't run
-// behind the loading screen.
 function RotatingWord({ words, active = true }) {
   const [index, setIndex] = useState(0);
   const [widths, setWidths] = useState([]);
@@ -2672,7 +2660,6 @@ function RotatingWord({ words, active = true }) {
   useEffect(() => {
     const measure = () => setWidths(measureRefs.current.map((el) => (el ? el.getBoundingClientRect().width : 0)));
     measure();
-    // Zalando Sans loads from Google Fonts, so re-measure once it's in.
     document.fonts?.ready.then(measure);
     window.addEventListener("resize", measure);
     return () => window.removeEventListener("resize", measure);
@@ -2702,7 +2689,6 @@ function RotatingWord({ words, active = true }) {
           ))}
         </span>
       ))}
-      {/* Invisible copies used only to measure each word's natural width. */}
       {words.map((word, i) => (
         <span key={"m-" + word} ref={(el) => (measureRefs.current[i] = el)} className="word-rotator__measure">
           {word}
@@ -2813,72 +2799,54 @@ function Home({ onOpenProject, onOpenWorkArchive, activeTags, setActiveTags, tog
     };
   }, []);
 
-  // The hero's two headline lines and the separator between them are one
-  // sequence, not three independently-guessed delays: each stage's delay
-  // is computed from when line 1 actually finishes revealing
-  // (charFlipRevealMs), so line 2 always starts right as line 1 completes
-  // rather than on a guessed fixed delay.
-  const HERO_LINE_1 = "Hello, I'm Luka, a freelance brand and graphic designer";
-  const HERO_LINE_2 = "I help companies build trust and credibility through visual communication";
-  const HERO_LINE_1_DELAY = 0;
-  const heroLine2Delay = HERO_LINE_1_DELAY + charFlipRevealMs(HERO_LINE_1);
+  const HERO_LINE_1 = "Hello, my name is Luka. I am";
+  const HERO_LINE_2 = "Brand, Graphic and UI Designer";
 
   return (
     <div>
-      {/* Hero — Figma "Elan sajt" file, Home/Hero node 675:980. */}
+      {/* Hero — Figma "Elan sajt" file, Home/Hero node 817:2481. */}
       <section className="hero">
+        <div className="hero__background" aria-hidden="true" />
         <div className="hero__content">
           {/* No animation of its own, deliberately — just sits there
               normally the whole time, blank/hidden behind the loading
               screen's own mask like everything else under it, and plainly
               visible the instant that mask clears past it. */}
-          <SiteNav onLogoClick={scrollToWork} onWorkClick={onOpenWorkArchive} onCta={onCta} />
+          <SiteNav
+            onLogoClick={scrollToWork}
+            onWorkClick={onOpenWorkArchive}
+            onCta={onCta}
+            symbolOnly
+          />
 
-          {/* Two independent lines, node 718:1863 — a 12-col grid (each line
-              spans 1/10) rather than one headline block, so they're free to
-              wrap and stagger-reveal on their own. AutoCharFlipRevealText,
-              not ScrollCharFlipRevealText — these have to play as soon as
-              they're allowed to (heroReady), full stop, not only once they
-              also happen to satisfy a scroll-position check; the hero
-              headline is right at the top of the page, so whether that
-              check passes at a given moment isn't something it should
-              depend on at all. */}
           <div className="hero__headline-grid">
-            <div className="hero__headline-row">
-              <h1 className="hero__headline">
-                {heroReady && (
-                  <AutoCharFlipRevealText
-                    text={HERO_LINE_1}
-                    delay={HERO_LINE_1_DELAY}
-                    accentWords={["freelance", "designer"]}
-                  />
-                )}
-              </h1>
-            </div>
-            <div className="hero__headline-row">
-              <p className="hero__headline">
-                {heroReady && (
-                  <AutoCharFlipRevealText
-                    text={HERO_LINE_2}
-                    delay={heroLine2Delay}
-                    accentWords={["trust", "credibility"]}
-                  />
-                )}
-              </p>
-            </div>
-            {/* Node 803:2499 — bordered meta row closing out the headline
-                grid: the service line on the left, cycling Brand / Graphic /
-                Web in front of "Design" (RotatingWord), and a download link
-                for the CV on the right, in place of the old looping logo
-                mark (client request). */}
-            <div className="hero__meta-row">
-              <p className="hero__meta-tags" aria-label="Brand, Graphic and Web Design">
-                <RotatingWord words={HERO_SERVICES} active={heroReady} /> Design
-              </p>
-              <a className="hero__cv-link" href="/CV_Luka-Ivanovic.pdf" download="CV_Luka-Ivanovic.pdf">
-                Download my resume
-              </a>
-            </div>
+            <h1 className="hero__headline">
+              {heroReady && (
+                <AutoCharFlipRevealText
+                  text={`${HERO_LINE_1} \n ${HERO_LINE_2}`}
+                  accentWords={["Brand", "Graphic", "UI"]}
+                  accentColors={{
+                    Brand: "var(--blue-60)",
+                    Graphic: "var(--green-80)",
+                    UI: "var(--red-60)",
+                  }}
+                />
+              )}
+            </h1>
+            <p className="hero__subhead">
+              I help companies build trust and
+              <br />
+              credibility through visual communication
+            </p>
+          </div>
+          {/* The labels sit on the bottom edge of the hero frame. */}
+          <div className="hero__meta-row">
+            <p className="hero__meta-tags" aria-label="Brand, Graphic and Web Design">
+              <RotatingWord words={HERO_SERVICES} active={heroReady} /> Design
+            </p>
+            <a className="hero__cv-link" href="/CV_Luka-Ivanovic.pdf" download="CV_Luka-Ivanovic.pdf">
+              Download my resume
+            </a>
           </div>
         </div>
 

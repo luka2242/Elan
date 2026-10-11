@@ -46,6 +46,7 @@
   --fw-100: 200; /* ExtraLight */
   --fw-200: 400; /* Regular */
   --fw-300: 600; /* SemiBold */
+  --fw-400: 700; /* Bold */
 
   /* text/font-sizes/* that don't vary by breakpoint */
   --fs-200: 14px;
@@ -94,7 +95,9 @@
   --section-headline-size: var(--fs-600-size);
   --section-headline-tracking: var(--fs-600-tracking);
 
-  --card-title-size: var(--fs-500-size);
+  --headline-size:clamp(32px, 2.5vw, 48px);
+
+  --card-title-size: clamp(24px, 2vw, 36px);
   --card-title-tracking: var(--fs-600-tracking);
 
   /* Process section's text↔cards column gap (row-gap stays a flat 24px) */
@@ -117,7 +120,6 @@
     --fs-900-size: 54px;
     --fs-900-tracking: -1.62px;
 
-    --card-title-size: var(--fs-500-size);
     --card-title-tracking: var(--fs-500-tracking);
   }
 }
@@ -149,7 +151,6 @@
 
     --process-col-gap: 56px;
 
-    --section-headline-size: var(--fs-700-size);
     --section-headline-tracking: var(--fs-700-tracking);
   }
 }
@@ -178,9 +179,6 @@
     --hero-label-radius: 16px;
 
     --process-col-gap: 88px;
-
-    --section-headline-size: var(--fs-600-size);
-    --section-headline-tracking: var(--fs-700-tracking);
   }
 }
 
@@ -233,16 +231,19 @@ body{
   letter-spacing: -0.308px;
   text-transform: uppercase;
   margin: 0;
+  align-self: center;
 }
 
 .section-headline {
   font-family: var(--font-primary);
-  font-weight: var(--fw-200);
-  line-height: 1;
+  font-weight: var(--fw-300);
+  line-height: 1.15;
   margin: 0;
-  font-size: var(--section-headline-size);
+  font-size: var(--headline-size);
   letter-spacing: var(--section-headline-tracking);
   text-wrap: balance;
+  text-transform: uppercase;
+  text-align: center;
 }
 
 /* Word-by-word scroll reveal — see ScrollRevealText's comment in
@@ -321,12 +322,13 @@ body{
 
 .card-title {
   font-family: var(--font-primary);
-  font-weight: var(--fw-200);
+  font-weight: var(--fw-300);
   line-height: 1;
   margin: 0;
   font-size: var(--card-title-size);
   letter-spacing: var(--card-title-tracking);
   text-wrap: balance;
+  text-transform: uppercase;
 }
 
 .body-text {
@@ -354,9 +356,10 @@ body{
      up (--sp-300/--sp-200) at the Laptop breakpoint (900px+) below. */
   padding: var(--sp-200) var(--section-padding) var(--sp-100);
   margin: 0;
+  text-transform: uppercase;
 }
 @media (min-width: 900px) {
-  .card-tab { padding-top: var(--sp-300); padding-bottom: var(--sp-200); }
+  .card-tab { padding-top: var(--sp-200); padding-bottom: var(--sp-100); }
 }
 .card-tab p { margin: 0; }
 .card-tab--yellow { background: var(--yellow-20); color: var(--yellow-80); }
@@ -482,7 +485,7 @@ body{
 .hero {
   position: relative;
   isolation: isolate;
-  background-color: var(--k-900);
+  background-color: var(--k-0);
   /* Scoped here, not on html/body/root — .hero has no position:sticky
      descendants (those are all in the separate Process section), so
      clipping its own bleed (e.g. the glow's negative inset) can't trigger
@@ -490,8 +493,23 @@ body{
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  gap: calc(2 * var(--sp-700));
   align-items: center;
+}
+
+.hero__background {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 100dvh;
+  z-index: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 39px,
+    rgb(28 28 28 / 0.06) 40px,
+    transparent 41px
+  );
+  mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
 }
 
 .hero__content {
@@ -521,7 +539,14 @@ body{
   align-items: center;
   justify-content: space-between;
   padding-bottom: var(--sp-300);
-  border-bottom: 1px solid var(--k-700);
+}
+.hero .site-nav__link { color: var(--k-800); text-transform: uppercase; }
+.hero .site-nav .btn-primary {
+  border-color: var(--k-800);
+  border-radius: 0;
+  padding: 4px 10px;
+  font-size: 12px;
+  text-transform: uppercase;
 }
 .site-nav__logo-btn {
   cursor: pointer;
@@ -550,88 +575,62 @@ body{
 }
 .site-nav__link:hover { opacity: 0.8; }
 
-/* Node 718:1863 — two independent headline lines in a 12-col grid (each
-   spans columns 1/10), not one headline block, so they lay out and
-   stagger-reveal as their own elements. margin-top here isn't a Figma
-   variable (it's literal in the source file), so it stays a plain number
-   rather than a token — was previously on .hero__row (now removed along
-   with .hero__copy/.hero__subhead/.hero__cta/.hero__labels, since the hero
-   shows only the headline now). Row gap uses --sp-600, which happens to
-   match Figma's literal 80px gap at the desktop tier exactly. */
+/* The headline and supporting copy form one centered block between the
+   top navigation and the hero's bottom labels. */
 .hero__headline-grid {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  row-gap: var(--sp-400);
-  width: 100%;
-  margin-top: 40px;
-}
-@media (min-width: 900px) {
-  .hero__headline-grid { margin-top: 96px; }
-}
-
-.hero__headline-row {
-  grid-column: 1 / span 8;
+  flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-}
-
-/* Below 480px (the Mobile tier, before Mobile Vertical's own breakpoint
-   kicks in) both this and .hero__closing-headline give up their partial
-   span and run the full width of their grid instead. */
-@media (max-width: 900px) {
-  .hero__headline-row { grid-column: 1 / span 10; }
-}
-
-@media (max-width: 479px) {
-  .hero__headline-row { grid-column: 1 / -1; }
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  text-align: center;
 }
 
 .hero__headline {
   font-family: var(--font-primary);
-  font-weight: var(--fw-200);
-  line-height: 1.03;
-  color: var(--k-500);
+  font-weight: var(--fw-300);
+  line-height: 1.15;
+  color: var(--k-900);
   margin: 0;
   width: 100%;
-  /* k-500 — matches Services' own headline (.services__headline's
-     tone-muted) per the user's request to bring all three section
-     headlines (this, hero__closing-headline, Services) to the same
-     color. Size matches .section-headline (same scale
-     hero__closing-headline uses) rather than a fixed fs-600. */
-  font-size: var(--section-headline-size);
-  letter-spacing: var(--section-headline-tracking);
+  font-size: var(--headline-size);
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
   text-wrap: balance;
 }
 
-/* Node 803:2499 — closes out the headline grid: a border-top rule the full
-   12 columns wide, with the service list on the left and a small
-   decorative swatch on the right. */
+.hero__subhead {
+  max-width: 560px;
+  margin: var(--sp-300) 0 0;
+  color: var(--k-500);
+  font-family: var(--font-primary);
+  font-size: var(--fs-200);
+  font-weight: var(--fw-200);
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+
 .hero__meta-row {
-  grid-column: 1 / -1;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--sp-400);
-  border-top: 1px solid var(--k-700);
-  padding-top: var(--sp-400);
+  width: 100%;
+  gap: var(--sp-300);
+  padding-top: var(--sp-300);
 }
 .hero__meta-tags {
   margin: 0;
   font-family: var(--font-primary);
-  font-weight: var(--fw-200);
-  font-size: var(--fs-300);
-  letter-spacing: -0.396px;
+  font-weight: var(--fw-300);
+  font-size: var(--fs-200);
+  letter-spacing: 0;
   line-height: 1.2;
-  color: var(--k-500);
+  color: var(--k-800);
   white-space: nowrap;
+  text-transform: uppercase;
 }
-/* The pipe separators alone are k-700 — one step darker than the k-500 text
-   around them (node 803:2500's own two accent spans). */
-.hero__meta-divider { color: var(--k-700); }
-/* Service line: one cycling word (RotatingWord) followed by "Design".
-   Each word sits in the same clipped slot; letters roll up from below,
-   hold, then roll out the top while the next word rolls in. */
 .word-rotator {
   position: relative;
   display: inline-block;
@@ -681,23 +680,23 @@ body{
   .word-rotator__char { transition: none; }
   .word-rotator__char { filter: none; }
 }
-
 /* CV download — plain underlined text link, replacing the old looping
    logo mark. The underline thins on hover rather than disappearing. */
 .hero__cv-link {
   flex-shrink: 0;
   font-family: var(--font-primary);
   font-weight: var(--fw-200);
-  font-size: var(--fs-300);
-  letter-spacing: -0.396px;
-  color: var(--k-500);
+  font-size: var(--fs-200);
+  letter-spacing: 0;
+  color: var(--k-800);
+  text-transform: uppercase;
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 0.25em;
   transition: color 200ms ease, text-underline-offset 200ms ease;
 }
-.hero__cv-link:hover { color: var(--k-300); text-underline-offset: 0.35em; }
-.hero__cv-link:focus-visible { outline: 1px solid var(--k-500); outline-offset: 4px; }
+.hero__cv-link:hover { color: var(--k-500); text-underline-offset: 0.35em; }
+.hero__cv-link:focus-visible { outline: 1px solid var(--k-800); outline-offset: 4px; }
 
 .hero__closing {
   position: relative;
@@ -706,6 +705,7 @@ body{
   flex-direction: column;
   align-items: center;
   padding: calc(4 * var(--sp-700)) var(--section-padding);
+  background-color: var(--k-900);
 }
 
 /* z-index:0, plus position:relative + z-index:1 on .hero__closing-grid
@@ -751,22 +751,21 @@ body{
   width: 100%;
   max-width: 1440px;
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
   padding: var(--sp-700) 0;
 }
 .hero__closing-content {
-  grid-column: 2 / span 3;
+  grid-column: 3 / span 8;
   display: flex;
   flex-direction: column;
   gap: var(--sp-300);
 }
-/* Below 480px, .hero__closing-grid's own content item runs full width
-   too — see .hero__headline-row's matching override above. */
+/* On smaller screens the closing statement spans the full grid width. */
 @media (max-width: 768px) {
   .hero__closing-content { grid-column: 1 / -1; }
 }
-.hero__closing-headline { color: var(--k-500); }
+
+.hero__closing-headline { color: var(--k-200); }
 
 /* ------------------------------------------------------------------ */
 /*  Services — "What can I help you with?", Figma node 721:1990         */
@@ -776,26 +775,6 @@ body{
   padding: var(--section-padding);
   padding-bottom:var(--sp-700);
   position: relative;
-}
-
-.services:after{
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  /* Soft ambient glow behind the cards. A radial gradient with many eased
-     stops instead of filter: blur() on a rounded box: the old 40px blur
-     over a section-sized ellipse still left a visible edge and stepped
-     rings, and a big blur is expensive to composite while scrolling. The
-     faint grain layer on top dithers the dark grays so the falloff doesn't
-     band into visible steps. Peak opacity (.6) matches the old glow. */
-  background:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .035 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
-    radial-gradient(ellipse 75% 70% at 50% 50%, rgb(43 43 43 / 0.6) 0%, rgb(43 43 43 / 0.582) 7%, rgb(43 43 43 / 0.54) 14%, rgb(43 43 43 / 0.474) 21%, rgb(43 43 43 / 0.39) 28%, rgb(43 43 43 / 0.3) 35%, rgb(43 43 43 / 0.21) 42%, rgb(43 43 43 / 0.126) 49%, rgb(43 43 43 / 0.06) 56%, rgb(43 43 43 / 0.018) 63%, rgb(43 43 43 / 0.0) 70%);
-  /* Grain only where the glow is, so it never shows over the plain page. */
-  -webkit-mask-image: radial-gradient(ellipse 75% 70% at 50% 50%, #000 30%, transparent 70%);
-          mask-image: radial-gradient(ellipse 75% 70% at 50% 50%, #000 30%, transparent 70%);
 }
 
 /* At 900px+ .services__grid reserves its own bottom padding for the
@@ -817,7 +796,14 @@ body{
 /* will-change: same reasoning as .service-card's own comment below — this
    is translateY()'d every scroll event (Services' header-parallax effect)
    but was missing the hint every other scroll-animated element here has. */
-.services__header { padding: var(--sp-600) var(--sp-400); will-change: transform; }
+.services__header {
+  padding: var(--sp-600) var(--sp-400);
+  will-change: transform;
+  display: flex;
+  flex-direction: column;
+  justify-self: center;
+  gap:var(--sp-400)
+}
 /* Figma (721:1991/721:1993) sets the headline in a 3-col grid, spanning only
    the first two columns — i.e. 2/3 of the row — rather than the full width;
    matched here at the same 900px breakpoint the cards row itself goes flat
@@ -843,7 +829,6 @@ body{
 .services__grid {
   display: flex;
   flex-direction: column;
-  gap: var(--sp-400);
   margin-top: 24px;
 }
 @media (min-width: 480px) {
@@ -866,7 +851,7 @@ body{
   .services__grid {
     display: flex;
     flex-direction: row;
-    gap: 8px;
+    gap:0;
     /* Cards are shifted via transform now (see .service-card below and
        Services' scroll listener in Portfolio.jsx), not margin-top —
        transform doesn't affect layout, so this reserves the room the
@@ -886,8 +871,6 @@ body{
   min-width: 0; /* flex/grid items default to min-width:auto, which can push a card wider than its track when body copy is long */
   display: flex;
   flex-direction: column;
-  background: var(--k-900);
-  border-radius: 16px;
   transform-origin: center;
   max-width: 480px;
   justify-self: center;
@@ -916,10 +899,8 @@ body{
    sections stacked on top of each other. */
 .process-work {
   position: relative;
-  background-color: var(--k-0);
-  border-top-left-radius: var(--sp-600);
-  border-top-right-radius: var(--sp-600);
-    background-image: url(/src/assets/process-work-bg.svg);
+  background-color: var(--k-900);
+  background-image: url(/src/assets/process-work-bg.svg);
   background-size: cover;
   background-position: center;
 }
@@ -993,7 +974,7 @@ body{
    768px+, next to the cards instead of above them. */
 .process__aside {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: var(--sp-600);
   padding: var(--section-padding) 0;
   text-align: center;
@@ -1021,6 +1002,7 @@ body{
    text from 768px+. */
 .process__indicator {
   display: flex;
+  flex-direction: column;
   align-items: center;
   gap: 4px;
   justify-content: center;
@@ -1035,10 +1017,8 @@ body{
    over the current one, rather than snapping. 32px/80px and k-300/k-500 are
    the node's own inactive/active values. */
 .process__indicator-seg {
-  height: 4px;
-  border-radius: 2px;
-  flex-shrink: 0;
-  width: calc(32px + 48px * var(--indicator-active, 0));
+  height: 100%;
+  width: 4px;
   background-color: color-mix(in srgb, var(--k-300), var(--k-500) calc(var(--indicator-active, 0) * 100%));
 }
 
@@ -1120,7 +1100,6 @@ body{
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  border-radius: 16px;
   background-color: var(--k-0);
   box-shadow: 0 1px 2px rgba(17, 19, 24, 0.06), 0 8px 24px rgba(17, 19, 24, 0.08);
   max-width: 480px;
