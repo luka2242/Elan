@@ -560,11 +560,9 @@
 .hero__headline-grid {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  align-items: center;
-  justify-content: center;
-  width: 100%;
   text-align: center;
-  position: relative;
+  flex-grow: 1;
+  align-items: center;
 }
 
 .hero__headline {
@@ -787,10 +785,18 @@
 .services__header {
   padding: var(--sp-600) var(--sp-400);
   will-change: transform;
-  display: flex;
-  flex-direction: column;
-  justify-self: center;
-  gap:var(--sp-400)
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap:var(--sp-400);
+  
+  & > * {
+    grid-column: 3 / span 8;
+  }
+
+  & .eyebrow{
+    display: flex;
+    justify-content: center;
+  }
 }
 /* Figma (721:1991/721:1993) sets the headline in a 3-col grid, spanning only
    the first two columns — i.e. 2/3 of the row — rather than the full width;
@@ -824,7 +830,6 @@
     display: grid;
     grid-template-columns: repeat(12, minmax(0, 1fr));
     grid-template-rows: repeat(3, auto);
-    gap: var(--sp-500);
   }
   .service-card:nth-child(1) { grid-column: 3 / span 10; grid-row: 1; }
   .service-card:nth-child(2) { grid-column: 2 / span 10; grid-row: 2; }
@@ -839,7 +844,6 @@
   .services__grid {
     display: flex;
     flex-direction: row;
-    gap:0;
     /* Cards are shifted via transform now (see .service-card below and
        Services' scroll listener in Portfolio.jsx), not margin-top —
        transform doesn't affect layout, so this reserves the room the
@@ -1760,7 +1764,10 @@ div:has(.footer-meta__copyright){
   }
 }
 .case-intro-card__back:hover { opacity: 0.7; }
-.case-intro-card__tags { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 4px; }
+.case-intro-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end; gap: 4px; }
 /* Node 742:3072 — filled/colored, not .pill-outline's bordered/transparent
    look (that one's shared with the Work section's filter buttons): k-900
    bg, k-700 border always, with the tag's own accent-20 as its text color
@@ -1773,9 +1780,9 @@ div:has(.footer-meta__copyright){
   border-right: 1px solid var(--k-700);
   padding: var(--sp-100) var(--sp-200);
   font-family: var(--font-primary);
-  font-weight: var(--fw-300);
+  font-weight: var(--fw-200);
   font-size: var(--fs-200);
-  color: var(--k-900);
+  color: var(--k-400);
   white-space: nowrap;
   text-transform: uppercase;
 }
@@ -1989,7 +1996,11 @@ div:has(.footer-meta__copyright){
   transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
   width:100%;
 }
-.work-archive__pill--active {border: 2px solid var(--k-900); font-weight: var(--fw-300); }
+.work-archive__pill--active {
+  outline: 2px solid var(--k-900);
+  font-weight: var(--fw-300);
+  outline-offset: -2px;
+}
 .work-archive__clear {
   display: inline-flex;
   align-items: center;

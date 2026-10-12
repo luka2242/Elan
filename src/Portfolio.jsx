@@ -10,10 +10,6 @@ import STROOMKAART_03 from "./assets/stroomkaart/03.webp";
 import STROOMKAART_04 from "./assets/stroomkaart/04.webp";
 import STROOMKAART_05 from "./assets/stroomkaart/05.webp";
 import STROOMKAART_06 from "./assets/stroomkaart/06.webp";
-// import STROOMKAART_07 from "./assets/stroomkaart/07.webp";
-// import STROOMKAART_08 from "./assets/stroomkaart/08.webp";
-// import STROOMKAART_09 from "./assets/stroomkaart/09.webp";
-// import STROOMKAART_10 from "./assets/stroomkaart/10.webp";
 import FOTONA_COVER from "./assets/fotona/cover.webp";
 import FOTONA_INTRO from "./assets/fotona/intro.webp";
 import FOTONA_VI_01 from "./assets/fotona/01.webp";
@@ -3139,8 +3135,8 @@ function WorkArchive({ onOpenProject, activeTags, toggleTag }) {
     <div className="case-page">
       <div className="work-archive">
         <div className="work-archive__header">
-          <p className="eyebrow work-archive__eyebrow">Featured work</p>
-          <p className="work-archive__headline">Take a look at what I've done</p>
+          <p className="eyebrow work-archive__eyebrow">Take a look at my work</p>
+          <p className="work-archive__headline">Filter projects by the creative field</p>
           {/* node 798:2804 — same "Filter projects" pills as the homepage's
               own WorkSection, styled for this page's dark background
               (that one's .pill-outline is a light-bg white pill; this one's
