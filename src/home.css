@@ -32,10 +32,13 @@
   --red-60: #e53917;
   --red-80: #c13a1f;
   --purple-20: #baadfb;
+  --purple-60: #7055f2;
   --purple-80: #5f47cc;
   --yellow-20: #ffd978;
+  --yellow-60: #ffc42c;
   --yellow-80: #d99725;
   --green-20: #62d989;
+  --green-60: #2db35a;
   --green-80: #238c46;
   --blue-20: #6dd3f2;
   --blue-60: #1397bf; /* node 676:1763's "Why work with me" eyebrow */
@@ -558,20 +561,19 @@
 /* The headline and supporting copy form one centered block between the
    top navigation and the hero's bottom labels. */
 .hero__headline-grid {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
+  display: flex;
   text-align: center;
   flex-grow: 1;
   align-items: center;
 }
 
 .hero__headline {
-  grid-column: 3 / span 8;
+  max-width: 540px;
   font-family: var(--font-primary);
   font-weight: var(--fw-300);
   line-height: 1.15;
   color: var(--k-900);
-  margin: 0;
+  margin: auto;
   width: 100%;
   font-size: var(--section-headline-size);
   letter-spacing: -0.02em;
@@ -796,16 +798,22 @@
   & .eyebrow{
     display: flex;
     justify-content: center;
+    color: var(--k-300);
   }
 }
-/* Figma (721:1991/721:1993) sets the headline in a 3-col grid, spanning only
-   the first two columns — i.e. 2/3 of the row — rather than the full width;
-   matched here at the same 900px breakpoint the cards row itself goes flat
-   3-across, so headline and grid share one consistent column rhythm. Below
-   that the headline stays full-width, matching the stacked/stairstep card
-   layout at those sizes. */
-@media (min-width: 900px) {
-  .services__header { max-width: calc(2 / 3 * 100%); }
+
+@media (max-width: 768px){
+  .services__header > * {
+    grid-column: 2 / span 10;
+  }
+}
+@media (max-width: 480px){
+  .services__header{
+    padding-inline: 0;
+  }
+  .services__header > * {
+    grid-column: 1 / -1;
+  }
 }
 
 /* Mobile: a plain stack. Mobile Vertical (480px) through Tablet (768px): a
@@ -844,7 +852,7 @@
   .services__grid {
     display: flex;
     flex-direction: row;
-    /* Cards are shifted via transform now (see .service-card below and
+/* Cards are shifted via transform now (see .service-card below and
        Services' scroll listener in Portfolio.jsx), not margin-top —
        transform doesn't affect layout, so this reserves the room the
        shifted cards actually need instead: the larger of the shared 420px

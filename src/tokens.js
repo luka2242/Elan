@@ -19,15 +19,14 @@ export const NEUTRAL = {
   900: "#1c1c1c",
 };
 
-// Tag/label accent colors — the "-20" tint used for hero skill pills/process
-// card tabs, "-60" the red brand accent, "-80" the deeper shade used for
-// card glows and process-card tab text.
+// Tag/label accent colors — "-20" is the tint, "-60" the base accent, and
+// "-80" the deeper shade used for card glows and process-card tab text.
 export const ACCENT = {
   red: { 20: "#ff9985", 60: "#e53917", 80: "#c13a1f" },
-  purple: { 20: "#baadfb", 80: "#5f47cc" },
-  yellow: { 20: "#ffd978", 80: "#d99725" },
-  green: { 20: "#62d989", 80: "#238c46" },
-  blue: { 20: "#6dd3f2", 80: "#1183a6" },
+  purple: { 20: "#baadfb", 60: "#7055f2", 80: "#5f47cc" },
+  yellow: { 20: "#ffd978", 60: "#ffc42c", 80: "#d99725" },
+  green: { 20: "#62d989", 60: "#2db35a", 80: "#238c46" },
+  blue: { 20: "#6dd3f2", 60: "#1397bf", 80: "#1183a6" },
 };
 
 export const FONT_FAMILY = "'Zalando Sans', sans-serif";

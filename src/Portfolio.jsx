@@ -3396,7 +3396,7 @@ export default function App() {
     return () => window.removeEventListener("popstate", onPopState);
   }, []);
   const scrollToContact = () => {
-    document.getElementById("contact")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    document.body.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
   };
 
   const currentProject = route.view === "project" ? PROJECTS.find((p) => p.id === route.id) : null;
