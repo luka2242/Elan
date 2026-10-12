@@ -92,13 +92,13 @@
      Laptop block below), fs-800 from 768-899px, fs-900 below 768px (its own
      value continues to ramp with fs-900's own breakpoints below that, same
      for fs-700 above 900). Base/mobile value here is fs-900's. */
-  --section-headline-size: var(--fs-600-size);
+  --section-headline-size:clamp(28px, 2.5vw, 48px);
   --section-headline-tracking: var(--fs-600-tracking);
 
-  --headline-size:clamp(32px, 2.5vw, 48px);
+  --hero-headline-size: clamp(40px, 2.8vw, 54px);
 
   --card-title-size: clamp(24px, 2vw, 36px);
-  --card-title-tracking: var(--fs-600-tracking);
+  --card-title-tracking: -0.25px;
 
   /* Process section's text↔cards column gap (row-gap stays a flat 24px) */
   --process-col-gap: 24px;
@@ -120,7 +120,6 @@
     --fs-900-size: 54px;
     --fs-900-tracking: -1.62px;
 
-    --card-title-tracking: var(--fs-500-tracking);
   }
 }
 
@@ -207,9 +206,6 @@
   }
 }
 
-body{
-  background-color: var(--k-900);
-}
 
 /* Wraps the routed page content (Home, or SiteHeader+ProjectPage) +
    SiteFooter — stacks them in one column with the standard section gap
@@ -239,7 +235,7 @@ body{
   font-weight: var(--fw-300);
   line-height: 1.15;
   margin: 0;
-  font-size: var(--headline-size);
+  font-size: var(--section-headline-size);
   letter-spacing: var(--section-headline-tracking);
   text-wrap: balance;
   text-transform: uppercase;
@@ -286,7 +282,7 @@ body{
    — e.g. "strategic"/"needs"/"values" in the hero's closing statement —
    same treatment/color as char-flip-auto__char--accent above. */
 .char-flip__char--accent {
-  color: var(--k-300);
+  color: var(--k-400);
 }
 
 /* CharFlipAutoChars (Portfolio.jsx) — same effect-4 shape as .char-flip
@@ -322,7 +318,7 @@ body{
 
 .card-title {
   font-family: var(--font-primary);
-  font-weight: var(--fw-300);
+  font-weight: var(--fw-400);
   line-height: 1;
   margin: 0;
   font-size: var(--card-title-size);
@@ -390,17 +386,17 @@ body{
 .btn-primary {
   display: inline-block;
   background: var(--k-0);
-  border: 1px solid var(--k-300);
-  color: var(--k-800);
-  border-radius: 4px;
+  border: 2px solid var(--k-900);
+  color: var(--k-900);
   padding: var(--btn-padding-y) var(--btn-padding-x);
   font-family: var(--font-primary);
-  font-weight: var(--fw-200);
+  font-weight: var(--fw-400);
   font-size: var(--fs-200);
   letter-spacing: 0;
   cursor: pointer;
   transition: opacity 0.15s ease;
   text-wrap: nowrap;
+  text-transform: uppercase;
 }
 .btn-primary:hover { opacity: 0.8; }
 
@@ -408,18 +404,17 @@ body{
    the secondary action next to a filled .btn-primary in the same row. */
 .btn-secondary {
   display: inline-block;
-  background: none;
-  border: 1px solid var(--k-300);
-  color: var(--k-800);
-  border-radius: 4px;
+  color: var(--k-900);
   padding: var(--btn-padding-y) var(--btn-padding-x);
   font-family: var(--font-primary);
-  font-weight: var(--fw-200);
+  font-weight: var(--fw-400);
   font-size: var(--fs-200);
   letter-spacing: 0;
   cursor: pointer;
   transition: opacity 0.15s ease;
   text-wrap: nowrap;
+  text-transform: uppercase;
+  text-decoration: underline;
 }
 .btn-secondary:hover { opacity: 0.8; }
 
@@ -499,14 +494,14 @@ body{
 .hero__background {
   position: absolute;
   inset: 0 0 auto;
-  height: 100dvh;
+  height: 100%;
   z-index: 0;
   pointer-events: none;
   background: repeating-linear-gradient(
     to bottom,
     transparent 0,
     transparent 39px,
-    rgb(28 28 28 / 0.06) 40px,
+    rgb(28 28 28 / 0.05) 40px,
     transparent 41px
   );
   mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
@@ -540,14 +535,7 @@ body{
   justify-content: space-between;
   padding-bottom: var(--sp-300);
 }
-.hero .site-nav__link { color: var(--k-800); text-transform: uppercase; }
-.hero .site-nav .btn-primary {
-  border-color: var(--k-800);
-  border-radius: 0;
-  padding: 4px 10px;
-  font-size: 12px;
-  text-transform: uppercase;
-}
+
 .site-nav__logo-btn {
   cursor: pointer;
   background: none;
@@ -560,44 +548,41 @@ body{
 @media (max-width: 480px) {
   .site-nav__logo-btn svg { height: 28px; width: auto; }
 }
-.site-nav__links { display: flex; align-items: center; gap: 32px; }
-.site-nav__link {
-  font-family: var(--font-primary);
-  font-weight: var(--fw-200);
-  font-size: var(--fs-200);
-  letter-spacing: 0;
-  color: var(--k-300);
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  transition: opacity 0.15s ease;
-}
+.site-nav__links {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-100); }
+
 .site-nav__link:hover { opacity: 0.8; }
 
 /* The headline and supporting copy form one centered block between the
    top navigation and the hero's bottom labels. */
 .hero__headline-grid {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
   align-items: center;
   justify-content: center;
   width: 100%;
   text-align: center;
+  position: relative;
 }
 
 .hero__headline {
+  grid-column: 3 / span 8;
   font-family: var(--font-primary);
   font-weight: var(--fw-300);
   line-height: 1.15;
   color: var(--k-900);
   margin: 0;
   width: 100%;
-  font-size: var(--headline-size);
+  font-size: var(--section-headline-size);
   letter-spacing: -0.02em;
   text-transform: uppercase;
   text-wrap: balance;
+
+  @media (max-width: 480px) {
+    grid-column: 1 / -1;
+  }
 }
 
 .hero__subhead {
@@ -623,7 +608,7 @@ body{
 .hero__meta-tags {
   margin: 0;
   font-family: var(--font-primary);
-  font-weight: var(--fw-300);
+  font-weight: var(--fw-400);
   font-size: var(--fs-200);
   letter-spacing: 0;
   line-height: 1.2;
@@ -685,10 +670,10 @@ body{
 .hero__cv-link {
   flex-shrink: 0;
   font-family: var(--font-primary);
-  font-weight: var(--fw-200);
+  font-weight: var(--fw-400);
   font-size: var(--fs-200);
   letter-spacing: 0;
-  color: var(--k-800);
+  color: var(--k-900);
   text-transform: uppercase;
   text-decoration: underline;
   text-decoration-thickness: 1px;
@@ -704,8 +689,10 @@ body{
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   padding: calc(4 * var(--sp-700)) var(--section-padding);
   background-color: var(--k-900);
+  min-height: 100dvh;
 }
 
 /* z-index:0, plus position:relative + z-index:1 on .hero__closing-grid
@@ -775,6 +762,7 @@ body{
   padding: var(--section-padding);
   padding-bottom:var(--sp-700);
   position: relative;
+  background-color: var(--k-0);
 }
 
 /* At 900px+ .services__grid reserves its own bottom padding for the
@@ -900,10 +888,10 @@ body{
 .process-work {
   position: relative;
   background-color: var(--k-900);
-  background-image: url(/src/assets/process-work-bg.svg);
+  /* background-image: url(/src/assets/process-work-bg.svg);
   background-size: cover;
-  background-position: center;
-}
+  background-position: center;*/
+} 
 
 
 /* Mobile ("vertical", <768px): .process itself (the outer <section>, not
@@ -975,10 +963,17 @@ body{
 .process__aside {
   display: flex;
   flex-direction: row;
-  gap: var(--sp-600);
+  gap: var(--sp-400);
   padding: var(--section-padding) 0;
-  text-align: center;
 }
+
+@media (max-width: 768px) {
+  .process__aside {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
 @media (min-width: 768px) {
   .process__aside {
     position: sticky;
@@ -995,31 +990,39 @@ body{
   }
 }
 
-/* Node 747:5801, "Frame 126" — segmented progress indicator, one pill per
-   process card. Sits above .process__intro; .process__aside's own 24px gap
-   (above) is the spacing between them, not a margin here. Centered to match
+/* Sits above .process__intro; .process__aside's own 24px gap (above) is the
+   spacing between them, not a margin here. Centered to match
    .process__aside's own centered text below 768px, left like the aside's
    text from 768px+. */
 .process__indicator {
+  width: 4px;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--k-900);
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 4px;
   justify-content: center;
 }
-@media (min-width: 768px) {
-  .process__indicator { justify-content: flex-start; }
+@media (max-width: 768px) {
+  .process__indicator { 
+    width: 100%;
+    height: 4px;
+  }
 }
-/* --indicator-active (0-1, written per segment by ProcessStack's scroll
-   listener in Portfolio.jsx) is a continuous blend, not a discrete on/off —
-   it's how much *this* card currently owns being "on top" of the stack, so
-   width/color crossfade smoothly between segments as the next card arrives
-   over the current one, rather than snapping. 32px/80px and k-300/k-500 are
-   the node's own inactive/active values. */
-.process__indicator-seg {
+.process__indicator-fill {
+  display: block;
+  width: 100%;
   height: 100%;
-  width: 4px;
-  background-color: color-mix(in srgb, var(--k-300), var(--k-500) calc(var(--indicator-active, 0) * 100%));
+  background-color: var(--k-400);
+  transform: scaleY(var(--indicator-progress, 0));
+  transform-origin: top;
+  will-change: transform;
+}
+@media (max-width: 768px) {
+  .process__indicator-fill {
+    transform: scaleX(var(--indicator-progress, 0));
+    transform-origin: left;
+  }
 }
 
 /* No more gap here — that spacing existed only to separate the headline
@@ -1029,7 +1032,21 @@ body{
   display: flex;
   flex-direction: column;
   height: 100%;
-  justify-content: center;}
+  justify-content: center;
+
+  & > .section-headline {
+    text-align: left;
+  }
+
+  @media (max-width: 768px){
+    & {
+      align-self: center;
+    }
+    & > .section-headline {
+      text-align: center;
+  }
+  }
+}
 
 /* .process__cards-wrap just fills whatever vertical space .process__aside's
    own height (above) doesn't take, within the pinned .process__section box
@@ -1102,7 +1119,6 @@ body{
   overflow: hidden;
   background-color: var(--k-0);
   box-shadow: 0 1px 2px rgba(17, 19, 24, 0.06), 0 8px 24px rgba(17, 19, 24, 0.08);
-  max-width: 480px;
   margin-inline: auto;
 }
 .process-card:nth-child(1) { top: calc(1 * var(--sp-600)); z-index: 1; }
@@ -1126,7 +1142,11 @@ body{
    component's comment for the full mechanism. position:relative isn't
    required for the sticky child below, but keeps this a clean containing
    block for it regardless of ancestors. */
-.work { position: relative; z-index: 1; }
+.work {
+  position: relative;
+  z-index: 1;
+  background-color: var(--k-0);
+}
 
 /* Invisible sibling below .work__pin, mobile only — see WorkSection's
    effect comment (Portfolio.jsx) for how its 200dvh height doubles as both
@@ -1159,7 +1179,6 @@ body{
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background-color: var(--k-900);
 }
 
 .work__inner {
@@ -1318,7 +1337,6 @@ body{
   width: 100%;
   height: 100%;
   text-align: left;
-  border-radius: 16px;
   overflow: hidden;
   cursor: pointer;
   padding: 0;
@@ -1358,21 +1376,26 @@ body{
 .work-card__tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 4px;
   padding-block: var(--section-padding) var(--sp-200);
+  padding-inline: var(--sp-200);
 }
+
 .work-card__tag {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: var(--k-900);
   border-right: 1px solid var(--k-700);
-  padding: var(--sp-100) var(--sp-200);
+  padding: var(--sp-100) var(--sp-300);
   font-family: var(--font-primary);
-  font-weight: var(--fw-200);
+  font-weight: var(--fw-300);
   font-size: var(--fs-200);
-  color: var(--k-400);
+  color: var(--k-900);
   white-space: nowrap;
+  text-transform: uppercase;
+
+  &:first-child {
+    padding-left: 0;
+  }
 }
 
 .work-card__tag:last-child{
@@ -1403,24 +1426,19 @@ body{
   margin: 0;
   width: 100%;
   font-family: var(--font-primary);
-  font-weight: var(--fw-200);
+  font-weight: var(--fw-300);
   line-height: 1;
   font-size: var(--fs-400-size);
   letter-spacing: var(--fs-400-tracking);
-  color: var(--k-200);
+  color: var(--k-900);
+  text-transform: uppercase;
 }
-
-/* .btn-secondary's own colors (dark text/border) assume a light background —
-   override them here to the same light-on-dark tokens .work-archive__pill
-   uses, now that this section's own background is dark (k-900). */
-.work-card .btn-secondary { color: var(--k-400); border-color: var(--k-600); }
-
 
 /* ------------------------------------------------------------------ */
 /*  Footer — node 676:2160                                             */
 /* ------------------------------------------------------------------ */
 
-.footer { background: var(--k-800); }
+.footer { background: var(--k-0); }
 
 .footer__inner {
   margin: 0 auto;
@@ -1430,8 +1448,7 @@ body{
 
 .footer-card {
   background: var(--k-900);
-  border-radius: 16px;
-  padding: var(--sp-500);
+  padding: var(--section-padding);
   display: flex;
   flex-direction: column;
   /* Below 768px, headline/contact/meta stack in this one column — gap is
@@ -1491,19 +1508,16 @@ body{
 
 .footer-card__headline {
   margin: 0;
-  color: var(--k-400);
+  color: var(--k-300);
   font-family: var(--font-primary);
-  font-weight: var(--fw-200);
+  font-weight: var(--fw-300);
   line-height: 1;
-  font-size: var(--fs-600-size);
-  letter-spacing: var(--fs-600-tracking);
+  font-size: var(--section-headline-size);
+  letter-spacing: var(--section-headline-tracking);
   text-wrap: balance;
+  text-transform: uppercase;
 }
-/* "awesome" in the footer headline — node 676:2130's own #e8e8e8 span,
-   which is k-200 exactly. */
-.footer-card__headline-accent {
-  color: var(--k-200);
-}
+
 /* Node 787:2351 — was missing entirely; every breakpoint pairs the headline
    with this line. fs-300/18px doesn't vary by breakpoint (not in the
    responsive ramp), so no media query needed here. */
@@ -1635,7 +1649,6 @@ div:has(.footer-meta__copyright){
 .footer-input {
   width: 100%;
   border: 1px solid var(--k-600);
-  border-radius: 4px;
   padding: var(--sp-200) var(--sp-300);
   background: var(--k-800);
   color: var(--k-300);
@@ -1658,7 +1671,7 @@ div:has(.footer-meta__copyright){
 /*  Case study — reusable project template, node 676:5139               */
 /* ------------------------------------------------------------------ */
 
-.case-page { background: var(--k-900); }
+.case-page { background: var(--k-0); }
 
 /* Padding wrapper around the shared nav (SiteNav, .site-nav) on case-study
    pages — home gets this same outer padding for free from .hero__content;
@@ -1666,6 +1679,7 @@ div:has(.footer-meta__copyright){
    itself (border-bottom, transparent, non-sticky) is identical on every
    page — no separate dark sticky bar here. */
 .case-nav {
+  background: var(--k-0);
   padding: var(--section-padding) var(--section-padding) 0;
   /* Home gets this same 1440px cap + centering for free from .hero's own
      align-items:center; .page-shell (this wrapper's actual parent on
@@ -1692,7 +1706,7 @@ div:has(.footer-meta__copyright){
   padding: var(--section-padding);
 }
 
-.case-hero__image { position: relative; flex: 1; min-height: 0; border-radius: 16px; overflow: hidden; background: var(--k-800); }
+.case-hero__image { position: relative; flex: 1; min-height: 0; overflow: hidden; background: var(--k-800); }
 .case-hero__image img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 
 /* Below Laptop (node 676:5139), the hero isn't a fixed 600px band any more
@@ -1713,8 +1727,6 @@ div:has(.footer-meta__copyright){
 .case-intro-card {
   max-width: 768px;
   margin: 0 auto;
-  background: var(--k-900);
-  border-radius: 16px;
   /* pt/px = section-padding, pb = sp-600 (nodes 742:3080/789:2587) — the
      extra bottom padding is what actually separates the card from the media
      stack below; .case-sections carries no gap of its own for that. */
@@ -1722,6 +1734,7 @@ div:has(.footer-meta__copyright){
   display: flex;
   flex-direction: column;
   gap: var(--sp-500);
+  background-color: var(--k-0);
 }
 .case-intro-card__top { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-400); }
 @media (max-width: 480px) {
@@ -1737,8 +1750,14 @@ div:has(.footer-meta__copyright){
   cursor: pointer;
   font-family: var(--font-primary);
   font-size: var(--fs-200);
-  color: var(--k-200);
+  font-weight: var(--fw-300);
+  color: var(--k-900);
   transition: opacity 0.15s ease;
+  text-transform: uppercase;
+
+  & svg{
+    margin-top: -2px;
+  }
 }
 .case-intro-card__back:hover { opacity: 0.7; }
 .case-intro-card__tags { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 4px; }
@@ -1751,14 +1770,14 @@ div:has(.footer-meta__copyright){
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: var(--k-900);
   border-right: 1px solid var(--k-700);
   padding: var(--sp-100) var(--sp-200);
   font-family: var(--font-primary);
-  font-weight: var(--fw-200);
+  font-weight: var(--fw-300);
   font-size: var(--fs-200);
-  color: var(--tag-color, var(--k-400));
+  color: var(--k-900);
   white-space: nowrap;
+  text-transform: uppercase;
 }
 .case-intro-card__tag:last-child{
   border: none;
@@ -1774,32 +1793,32 @@ div:has(.footer-meta__copyright){
    case-next all depend on its current scale. */
 .case-title {
   font-family: var(--font-primary);
-  font-weight: var(--fw-200);
+  font-weight: var(--fw-300);
   line-height: 1.04;
   margin: 0;
   font-size: var(--fs-600-size);
   letter-spacing: var(--fs-600-tracking);
-  color: var(--k-200);
+  color: var(--k-900);
   text-wrap: balance;
+  text-transform: uppercase;
 }
 
-/* The one headline a Paragraph gets — "Introduction", a section's tag label
-   ("Visual Identity"), or a block's own heading ("Challenge"/"Solution").
-   No separate eyebrow sub-heading any more (that was a second, smaller
-   level stacked under this one — see Paragraph in Portfolio.jsx). */
+/* Paragraph headings are explicit labels such as "Introduction" or a
+   block's own heading ("Challenge"/"Solution"). */
 .case-text-block__label {
   margin: 0 0 var(--sp-200);
   font-family: var(--font-primary);
   font-weight: var(--fw-300);
   font-size: var(--fs-300);
   letter-spacing: -0.18px;
-  color: var(--k-200);
+  color: var(--k-900);
+  text-transform: uppercase;
 }
 /* sp-400 gap between stacked paragraphs (node 789:2601's text-body) — also
    carries the body copy's own k-400 (not .tone-muted's k-500, which reads
    as a different, darker "muted" tone used elsewhere on the site). */
 .case-text-block__body { display: flex; flex-direction: column; gap: var(--sp-400); }
-.case-text-block__body p { margin: 0; color: var(--k-400); }
+.case-text-block__body p { margin: 0; color: var(--k-600);}
 
 .case-sections {
   max-width: 1440px;
@@ -1842,7 +1861,6 @@ div:has(.footer-meta__copyright){
   text-align: left;
   background: none;
   border: none;
-  border-top: 1px solid var(--k-700);
   padding: var(--sp-700) var(--section-padding);
   cursor: pointer;
 }
@@ -1855,8 +1873,15 @@ div:has(.footer-meta__copyright){
   gap: var(--sp-400);
 }
 .case-next__label { margin: 0 0 8px; color: var(--k-400); }
-.case-next__name { margin: 0; }
-.case-next__arrow { color: var(--k-0); transition: transform 0.2s ease; flex-shrink: 0; }
+.case-next__name {
+  margin: 0;
+  font-size: var(--section-headline-size);
+  letter-spacing: var(--section-headline-tracking);
+  color: var(--k-900);
+  font-weight: var(--fw-300);
+  text-transform: uppercase;
+}
+.case-next__arrow { color: var(--k-900); transition: transform 0.2s ease; flex-shrink: 0; }
 .case-next:hover .case-next__arrow { transform: translate(4px, -4px); }
 
 /* ------------------------------------------------------------------ */
@@ -1897,19 +1922,21 @@ div:has(.footer-meta__copyright){
   gap: 16px;
   padding: 48px 0;
 }
-.work-archive__eyebrow { margin: 0; color: var(--blue-60); }
+
+.work-archive__eyebrow { margin: 0; color: var(--blue-60); align-self: flex-start; }
 /* Flat fs-800 at every size — not .section-headline's fs-900/800/700 alias
    (the homepage's own "Featured work" uses that instead, resolving to
    fs-700/64px at desktop; this standalone page reads bigger, fs-800/72px,
    per node 676:1678's own resolved style). */
 .work-archive__headline {
   margin: 0;
-  color: var(--k-400);
+  color: var(--k-900);
   font-family: var(--font-primary);
-  font-weight: var(--fw-200);
+  font-weight: var(--fw-300);
   line-height: 1.03;
-  font-size: var(--fs-800-size);
-  letter-spacing: var(--fs-800-tracking);
+  font-size: var(--section-headline-size);
+  letter-spacing: var(--section-headline-tracking);
+  text-transform: uppercase;
 }
 
 /* node 798:2804 — same filter pills as the homepage's own WorkSection
@@ -1920,38 +1947,49 @@ div:has(.footer-meta__copyright){
    margin-top (on top of .work-archive__header's own 16px gap) reproduces
    node 676:1674's 56px gap between the headline and this block. */
 .work-archive__filters {
-  margin-top: 40px;
+  margin-top: var(--sp-400);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 16px;
+  width: 100%;
 }
-.work-archive__filters-label {
-  margin: 0;
-  color: var(--k-400);
-  font-family: var(--font-primary);
-  font-weight: var(--fw-200);
-  font-size: var(--fs-400, 24px);
-  line-height: 1;
+
+.work-archive__pills {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: var(--sp-100);
+  width:100%;
+
+  @media (max-width: 768px) {
+    display: grid;
+    grid-template-columns: repeat(2 , 1fr);
+  }
+
+  @media (max-width: 360px) {
+    display: flex;
+    flex-direction: column;
+  }
+
 }
-.work-archive__pills { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; }
 .work-archive__pill {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid var(--k-600);
+  border: 1px solid var(--k-900);
   background: none;
-  padding: 6px 8px;
+  padding: var(--sp-200) var(--sp-300);
   font-family: var(--font-primary);
   font-weight: var(--fw-200);
-  font-size: var(--fs-200);
-  color: var(--k-400);
+  font-size: var(--fs-300);
+  color: var(--k-900);
   cursor: pointer;
   white-space: nowrap;
+  text-transform: uppercase;
   transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  width:100%;
 }
-.work-archive__pill:hover { border-color: var(--k-400); color: var(--k-200); }
-.work-archive__pill--active { background: var(--k-700); border-color: var(--k-700); color: var(--k-0); }
+.work-archive__pill--active {border: 2px solid var(--k-900); font-weight: var(--fw-300); }
 .work-archive__clear {
   display: inline-flex;
   align-items: center;
@@ -1996,7 +2034,6 @@ div:has(.footer-meta__copyright){
 .archive-card {
   display: flex;
   flex-direction: column;
-  border-radius: 16px;
   overflow: hidden;
   cursor: pointer;
 }
@@ -2016,12 +2053,13 @@ div:has(.footer-meta__copyright){
 .archive-card__title {
   margin: 0;
   min-width: 0;
-  color: var(--k-400);
+  color: var(--k-900);
   font-family: var(--font-primary);
-  font-weight: var(--fw-200);
+  font-weight: var(--fw-300);
   line-height: 1;
   font-size: var(--fs-400, 24px);
   letter-spacing: -0.72px;
+  text-transform: uppercase;
 }
 .archive-card__cta { flex-shrink: 0; }
 
